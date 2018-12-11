@@ -16,8 +16,8 @@ object Prometheus {
     const val VERSION = "1.0.0"
 
     @SidedProxy(
-            clientSide = "com.williambl.prometheus.client.clientProxy",
-            serverSide = "com.williambl.prometheus.server.serverProxy")
+            clientSide = "com.williambl.prometheus.client.ClientProxy",
+            serverSide = "com.williambl.prometheus.server.ServerProxy")
     lateinit var proxy: PrometheusProxy
 
     @Mod.EventHandler
