@@ -5,7 +5,7 @@ import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 
-class BaseBlock(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
+open class BaseBlock(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
                 lightLevel: Float, material: Material) : Block(material) {
     init {
         this.setCreativeTab(tab)
