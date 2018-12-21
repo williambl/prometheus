@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @Mod.EventBusSubscriber
 object ModBlocks {
 
-    val BASE_BLOCK = BaseBlock("BaseBlock", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON)
+    val energyStore = EnergyStoreBlock("EnergyStore", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON)
 
-    val blocks = listOf<Block>(BASE_BLOCK)
+    val blocks = listOf<Block>(energyStore)
 
     @SubscribeEvent
     @JvmStatic
