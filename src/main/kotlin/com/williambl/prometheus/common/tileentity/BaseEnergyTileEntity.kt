@@ -8,19 +8,14 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.ICapabilityProvider
-import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.energy.CapabilityEnergy
 
-open class BaseEnergyTileEntity() : TileEntity(), ITickable, ICapabilityProvider, IEnergyStorage, INBTSerializable<NBTTagCompound> {
+open class BaseEnergyTileEntity : TileEntity(), ITickable, ICapabilityProvider, IEnergyStorage {
 
     private var stored: Int = 0
     private var capacity: Int = 0
     private var maxInput: Int = 0
     private var maxOutput: Int = 0
-
-    constructor(dataTag: NBTTagCompound): this() {
-        this.deserializeNBT(dataTag)
-    }
 
     override fun update() {}
 
@@ -45,7 +40,9 @@ open class BaseEnergyTileEntity() : TileEntity(), ITickable, ICapabilityProvider
             super.hasCapability(capability, facing)
     }
 
-    override fun serializeNBT(): NBTTagCompound {
+    override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound {
+        super.writeToNBT(compound)
+
         val dataTag = NBTTagCompound()
 
         dataTag.setInteger("EnergyStored", this.stored)
@@ -53,25 +50,33 @@ open class BaseEnergyTileEntity() : TileEntity(), ITickable, ICapabilityProvider
         dataTag.setInteger("EnergyMaxInput", this.maxInput)
         dataTag.setInteger("EnergyMaxOutput", this.maxOutput)
 
-        return dataTag
+        compound.setTag("EnergyData", dataTag)
+
+        return compound
     }
 
-    override fun deserializeNBT(nbt: NBTTagCompound) {
-        if (nbt.hasKey("EnergyStored"))
-            this.stored = nbt.getInteger("EnergyStored")
-        if (nbt.hasKey("EnergyCapacity"))
-            this.capacity = nbt.getInteger("EnergyCapacity")
-        if (nbt.hasKey("EnergyMaxInput"))
-            this.maxInput = nbt.getInteger("EnergyMaxInput")
-        if (nbt.hasKey("EnergyMaxOutput"))
-            this.maxOutput = nbt.getInteger("EnergyMaxOutput")
+    override fun readFromNBT(compound: NBTTagCompound) {
+        super.readFromNBT(compound)
 
-        if (this.stored > this.getMaxEnergyStored())
-            this.stored = this.getMaxEnergyStored()
+        if (compound.hasKey("EnergyData")) {
+            val data = compound.getCompoundTag("EnergyData")
+
+            if (data.hasKey("EnergyStored"))
+                this.stored = data.getInteger("EnergyStored")
+            if (data.hasKey("EnergyCapacity"))
+                this.capacity = data.getInteger("EnergyCapacity")
+            if (data.hasKey("EnergyMaxInput"))
+                this.maxInput = data.getInteger("EnergyMaxInput")
+            if (data.hasKey("EnergyMaxOutput"))
+                this.maxOutput = data.getInteger("EnergyMaxOutput")
+        }
+
+        if (this.stored > this.maxEnergyStored)
+            this.stored = this.maxEnergyStored
     }
 
     override fun receiveEnergy(maxReceive: Int, simulate: Boolean): Int {
-        val acceptedPower = Math.min(this.getMaxEnergyStored() - this.getEnergyStored(), Math.min(this.getMaxInput(), maxReceive))
+        val acceptedPower = Math.min(this.maxEnergyStored - this.energyStored, Math.min(this.getMaxInput(), maxReceive))
 
         if (!simulate)
             this.stored += acceptedPower
@@ -80,7 +85,7 @@ open class BaseEnergyTileEntity() : TileEntity(), ITickable, ICapabilityProvider
     }
 
     override fun extractEnergy(maxExtract: Int, simulate: Boolean): Int {
-        val removedPower = Math.min(this.getEnergyStored(), Math.min(this.getMaxOutput(), maxExtract))
+        val removedPower = Math.min(this.energyStored, Math.min(this.getMaxOutput(), maxExtract))
 
         if (!simulate)
             this.stored -= removedPower
