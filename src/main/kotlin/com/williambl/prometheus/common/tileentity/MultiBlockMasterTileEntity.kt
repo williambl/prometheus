@@ -8,17 +8,14 @@ import net.minecraft.world.World
 
 open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
 
-    var input = 2500
-    var output = 2500
-    var capacity = 1000000
     private var multiBlockPositions: Array<BlockPos>? = null
 
     var isValidMultiBlock: Boolean = false
 
     init {
-        setMaxInput(input)
-        setMaxOutput(output)
-        setMaxEnergyStored(capacity)
+        setMaxInput(1000000)
+        setMaxOutput(0)
+        setMaxEnergyStored(0)
 
     }
 
@@ -31,19 +28,11 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
         isValidMultiBlock = checkMultiBlock(world, pos)
 
         if (isValidMultiBlock && !wasValidMultiBlock) {
-            for (i in 0..50) {
-                getMultiBlockPositions().forEach { blockPos ->
-                    world.spawnParticle(EnumParticleTypes.REDSTONE, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), 0.0, 0.3, 0.0)
-                }
-            }
+            maxEnergyStored = 1000000
             println("now valid multiblock!")
         }
         if (!isValidMultiBlock && wasValidMultiBlock) {
-            for (i in 0..50) {
-                getMultiBlockPositions().forEach { blockPos ->
-                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), 0.0, 0.3, 0.0)
-                }
-            }
+            maxEnergyStored = 0
             println("no longer valid multiblock!")
         }
     }
