@@ -1,4 +1,4 @@
-package com.williambl.prometheus.common.block
+package com.williambl.prometheus.common.block.base
 
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType

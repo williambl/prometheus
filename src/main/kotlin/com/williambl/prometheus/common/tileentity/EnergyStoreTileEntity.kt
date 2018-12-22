@@ -1,5 +1,6 @@
 package com.williambl.prometheus.common.tileentity
 
+import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.energy.CapabilityEnergy

@@ -1,4 +1,4 @@
-package com.williambl.prometheus.common.tileentity
+package com.williambl.prometheus.common.tileentity.base
 
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ITickable
