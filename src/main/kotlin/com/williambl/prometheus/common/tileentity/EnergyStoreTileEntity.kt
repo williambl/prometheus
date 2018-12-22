@@ -20,7 +20,7 @@ open class EnergyStoreTileEntity: BaseEnergyTileEntity() {
         if (!this.hasWorld() || this.world.isRemote)
             return
 
-        executeForEachSide { position: BlockPos, facing: EnumFacing ->
+        executeForEachSide( { position: BlockPos, facing: EnumFacing ->
 
             val tileEntity = this.getWorld().getTileEntity(position)
             if (tileEntity == null || tileEntity.isInvalid || !tileEntity.hasCapability(CapabilityEnergy.ENERGY, facing.opposite))
@@ -32,7 +32,7 @@ open class EnergyStoreTileEntity: BaseEnergyTileEntity() {
                 val energyToGive = Math.min(output, energyStored)
                 extractEnergy(consumer.receiveEnergy(energyToGive, false), false)
             }
-        }
+        })
     }
 
 }

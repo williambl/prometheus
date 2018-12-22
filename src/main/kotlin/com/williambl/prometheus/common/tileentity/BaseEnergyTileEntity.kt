@@ -19,8 +19,8 @@ open class BaseEnergyTileEntity : TileEntity(), ITickable, ICapabilityProvider, 
 
     override fun update() {}
 
-    protected fun executeForEachSide(functionToExecute: (position: BlockPos, facing: EnumFacing) -> Unit) {
-        for(facing: EnumFacing in EnumFacing.VALUES) {
+    protected fun executeForEachSide(functionToExecute: (position: BlockPos, facing: EnumFacing) -> Unit, facings: Array<EnumFacing> = EnumFacing.VALUES) {
+        for(facing: EnumFacing in facings) {
             val position: BlockPos = getPos().offset(facing)
             functionToExecute(position, facing)
         }
