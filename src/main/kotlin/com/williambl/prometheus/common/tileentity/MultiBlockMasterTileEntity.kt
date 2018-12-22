@@ -2,19 +2,16 @@ package com.williambl.prometheus.common.tileentity
 
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.init.Blocks
-import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraftforge.energy.CapabilityEnergy
-import org.lwjgl.input.Mouse
 
 open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
 
     var input = 2500
     var output = 2500
     var capacity = 1000000
-    private val multiBlockPositions: Array<BlockPos>
+    private var multiBlockPositions: Array<BlockPos>? = null
 
     var isValidMultiBlock: Boolean = false
 
@@ -23,7 +20,6 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
         setMaxOutput(output)
         setMaxEnergyStored(capacity)
 
-        multiBlockPositions = getAllPositionsInMultiBlock()
     }
 
     override fun update() {
@@ -36,18 +32,16 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
 
         if (isValidMultiBlock && !wasValidMultiBlock) {
             for (i in 0..50) {
-                multiBlockPositions.forEach { blockPos ->
-                    val particlePos = blockPos.add(pos)
-                    world.spawnParticle(EnumParticleTypes.REDSTONE, particlePos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), 0.0, 0.3, 0.0)
+                getMultiBlockPositions().forEach { blockPos ->
+                    world.spawnParticle(EnumParticleTypes.REDSTONE, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), 0.0, 0.3, 0.0)
                 }
             }
             println("now valid multiblock!")
         }
         if (!isValidMultiBlock && wasValidMultiBlock) {
             for (i in 0..50) {
-                multiBlockPositions.forEach { blockPos ->
-                    val particlePos = blockPos.add(pos)
-                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, particlePos.x.toDouble()+world.rand.nextDouble(), blockPos.y.toDouble()+world.rand.nextDouble(), blockPos.z.toDouble()+world.rand.nextDouble(), 0.0, 0.3, 0.0)
+                getMultiBlockPositions().forEach { blockPos ->
+                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), 0.0, 0.3, 0.0)
                 }
             }
             println("no longer valid multiblock!")
@@ -55,28 +49,28 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
     }
 
     private fun checkMultiBlock(world: World, pos: BlockPos) : Boolean {
-        multiBlockPositions.forEach { blockPos ->
-            val checkingPos = blockPos.add(pos)
+        getMultiBlockPositions().forEach { checkingPos ->
             if (world.getBlockState(checkingPos).block != Blocks.BEDROCK && checkingPos != pos)
                 return false
         }
         return true
     }
 
-    private fun getAllPositionsInMultiBlock(): Array<BlockPos> {
-        val posArray =  arrayOfNulls<BlockPos>(27)
+    private fun getMultiBlockPositions(): Array<BlockPos> {
+        if (multiBlockPositions != null)
+            return multiBlockPositions as Array<BlockPos>
 
-        var i = 0
+        val posList = emptyList<BlockPos>().toMutableList()
+
         for (y in -2..0) {
             for (x in -1..1) {
                 for (z in -1..1) {
-                    posArray[i] = BlockPos(x, y, z)
-                    i++
+                    posList.add(pos.add(x, y, z))
                 }
             }
         }
 
-        return posArray as Array<BlockPos>
+        return posList.toTypedArray()
     }
 
 }
