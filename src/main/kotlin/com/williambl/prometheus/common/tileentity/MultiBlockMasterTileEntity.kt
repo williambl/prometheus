@@ -1,6 +1,8 @@
 package com.williambl.prometheus.common.tileentity
 
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
+import net.minecraft.entity.effect.EntityLightningBolt
+import net.minecraft.entity.monster.EntityGiantZombie
 import net.minecraft.init.Blocks
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.BlockPos
@@ -35,6 +37,18 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
             maxEnergyStored = 0
             println("no longer valid multiblock!")
         }
+    }
+
+    fun activateMultiBlock() {
+        getMultiBlockPositions().forEach { position ->
+            if (position != pos)
+                world.setBlockToAir(position)
+        }
+
+        val giant = EntityGiantZombie(world)
+        giant.setPosition(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
+        world.spawnEntity(giant)
+        world.setBlockToAir(pos)
     }
 
     private fun checkMultiBlock(world: World, pos: BlockPos) : Boolean {

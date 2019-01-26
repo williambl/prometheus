@@ -36,11 +36,9 @@ open class MultiBlockMasterBlock(registryName: String, tab: CreativeTabs, soundT
 
         val tileEntity = worldIn.getTileEntity(pos) as MultiBlockMasterTileEntity
 
-        if (tileEntity.isValidMultiBlock && tileEntity.energyStored == tileEntity.maxEnergyStored) {
-            val entity = EntityGiantZombie(worldIn)
-            entity.setPosition(playerIn.posX, playerIn.posY, playerIn.posZ)
-            worldIn.spawnEntity(entity)
-        }
+        if (tileEntity.isValidMultiBlock && tileEntity.energyStored == tileEntity.maxEnergyStored)
+            tileEntity.activateMultiBlock()
+
         return true
     }
 
