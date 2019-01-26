@@ -1,5 +1,6 @@
 package com.williambl.prometheus.common.tileentity
 
+import com.williambl.prometheus.common.block.ModBlocks
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.monster.EntityGiantZombie
@@ -53,7 +54,7 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
 
     private fun checkMultiBlock(world: World, pos: BlockPos) : Boolean {
         getMultiBlockPositions().forEach { checkingPos ->
-            if (world.getBlockState(checkingPos).block != Blocks.BEDROCK && checkingPos != pos)
+            if (world.getBlockState(checkingPos).block != ModBlocks.ancientCircuitry && checkingPos != pos)
                 return false
         }
         return true
