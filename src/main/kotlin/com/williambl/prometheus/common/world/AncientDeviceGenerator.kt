@@ -25,10 +25,11 @@ class AncientDeviceGenerator : IWorldGenerator {
 
     val resourceLocation = ResourceLocation("prometheus", "ancient_device")
 
-    lateinit var chunkCoords: Array<Int>
+    lateinit var chunkCoords: ChunkPos
 
     override fun generate(random: Random?, chunkX: Int, chunkZ: Int, world: World?, chunkGenerator: IChunkGenerator?, chunkProvider: IChunkProvider?) {
         if (checkIfChunkIsCorrect(world!!, chunkX, chunkZ)) {
+            println("found correct chunk!")
             generateStructure(world, chunkX, chunkZ, getTemplate(world))
         }
     }
@@ -37,23 +38,23 @@ class AncientDeviceGenerator : IWorldGenerator {
         val position = BlockPos(chunkX*16+8, world.rand.nextInt(64), chunkZ*16+8)
 
         val placementSettings = PlacementSettings().setMirror(Mirror.NONE)
-                .setRotation(Rotation.NONE).setIgnoreEntities(false).setChunk((null as ChunkPos?)!!)
-                .setReplacedBlock((null as Block?)!!).setIgnoreStructureBlock(false)
+                .setRotation(Rotation.NONE).setIgnoreEntities(false).setChunk((ChunkPos(chunkX, chunkZ)))
 
         template.addBlocksToWorld(world, position, placementSettings)
     }
 
     private fun checkIfChunkIsCorrect(world: World, chunkX: Int, chunkZ: Int): Boolean {
         val correctChunkCoords = findChunkCoords(world)
-        return chunkX == correctChunkCoords[0] && chunkZ == correctChunkCoords[1]
+        return ChunkPos(chunkX, chunkZ) == correctChunkCoords
     }
 
-    fun findChunkCoords(world: World): Array<Int> {
+    fun findChunkCoords(world: World): ChunkPos {
         if (!::chunkCoords.isInitialized) {
             val seed = world.seed
-            val chunkX: Int = (MathHelper.sin((seed / 30).toFloat()) * 30).toInt()
-            val chunkY: Int = (MathHelper.cos((seed / 15).toFloat()) * 50).toInt()
-            chunkCoords = arrayOf(chunkX, chunkY)
+            val chunkX: Int = (Math.sin((Math.abs(seed / 30)).toDouble())*300).toInt()
+            val chunkY: Int = (Math.cos((Math.abs(seed / 15)).toDouble())*300).toInt()
+            chunkCoords = ChunkPos(chunkX, chunkY)
+            println(chunkCoords)
         }
         return chunkCoords
     }
