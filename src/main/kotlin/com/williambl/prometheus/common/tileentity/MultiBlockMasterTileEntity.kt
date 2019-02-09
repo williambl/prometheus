@@ -11,7 +11,7 @@ import net.minecraft.world.World
 
 open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
 
-    private var multiBlockPositions: Array<BlockPos>? = null
+    private lateinit var multiBlockPositions: Array<BlockPos>
 
     var isValidMultiBlock: Boolean = false
 
@@ -61,8 +61,8 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
     }
 
     private fun getMultiBlockPositions(): Array<BlockPos> {
-        if (multiBlockPositions != null)
-            return multiBlockPositions as Array<BlockPos>
+        if (::multiBlockPositions.isInitialized)
+            return multiBlockPositions
 
         val posList = emptyList<BlockPos>().toMutableList()
 
@@ -78,3 +78,4 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
     }
 
 }
+
