@@ -1,6 +1,9 @@
 package com.williambl.prometheus.common.tileentity
 
+import com.sun.org.apache.xpath.internal.operations.Mult
 import com.williambl.prometheus.common.block.ModBlocks
+import com.williambl.prometheus.common.multiblock.ModMultiBlocks
+import com.williambl.prometheus.common.multiblock.MultiBlock
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.monster.EntityGiantZombie
@@ -12,6 +15,8 @@ import net.minecraft.world.World
 open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
 
     private lateinit var multiBlockPositions: Array<BlockPos>
+
+    private lateinit var multiBlock: MultiBlock
 
     var isValidMultiBlock: Boolean = false
 
@@ -41,9 +46,9 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
     }
 
     fun activateMultiBlock() {
-        getMultiBlockPositions().forEach { position ->
-            if (position != pos)
-                world.setBlockToAir(position)
+        getMultiBlock().blocks.forEach { bi ->
+            if (bi.pos != pos)
+                world.setBlockToAir(bi.pos)
         }
 
         val giant = EntityGiantZombie(world)
@@ -53,28 +58,17 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
     }
 
     private fun checkMultiBlock(world: World, pos: BlockPos) : Boolean {
-        getMultiBlockPositions().forEach { checkingPos ->
-            if (world.getBlockState(checkingPos).block != ModBlocks.ancientCircuitry && checkingPos != pos)
+        getMultiBlock().getAllBlockInfos().forEach { checkingBI->
+            if (world.getBlockState(checkingBI.pos) != checkingBI.blockState)
                 return false
         }
         return true
     }
 
-    private fun getMultiBlockPositions(): Array<BlockPos> {
-        if (::multiBlockPositions.isInitialized)
-            return multiBlockPositions
-
-        val posList = emptyList<BlockPos>().toMutableList()
-
-        for (y in -2..0) {
-            for (x in -1..1) {
-                for (z in -1..1) {
-                    posList.add(pos.add(x, y, z))
-                }
-            }
-        }
-
-        return posList.toTypedArray()
+    private fun getMultiBlock(): MultiBlock {
+        if (!::multiBlock.isInitialized)
+            multiBlock = MultiBlock(ModMultiBlocks.ancientDevice.getAllOffsetBlockInfos(pos))
+        return multiBlock
     }
 
 }
