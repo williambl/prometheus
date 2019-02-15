@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 open class BaseEnergyBlock(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
-                      lightLevel: Float, material: Material) : BaseTileEntityProviderBlock(registryName, tab, soundType, hardness,
+                           lightLevel: Float, material: Material) : BaseTileEntityProviderBlock(registryName, tab, soundType, hardness,
         resistance, lightLevel, material) {
 
 

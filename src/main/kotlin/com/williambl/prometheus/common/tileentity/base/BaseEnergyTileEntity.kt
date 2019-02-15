@@ -2,13 +2,13 @@ package com.williambl.prometheus.common.tileentity.base
 
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.ITickable
-import net.minecraftforge.energy.IEnergyStorage
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.ITickable
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.energy.CapabilityEnergy
+import net.minecraftforge.energy.IEnergyStorage
 
 open class BaseEnergyTileEntity : TileEntity(), ITickable, ICapabilityProvider, IEnergyStorage {
 
@@ -20,7 +20,7 @@ open class BaseEnergyTileEntity : TileEntity(), ITickable, ICapabilityProvider, 
     override fun update() {}
 
     protected fun executeForEachSide(functionToExecute: (position: BlockPos, facing: EnumFacing) -> Unit, facings: Array<EnumFacing> = EnumFacing.VALUES) {
-        for(facing: EnumFacing in facings) {
+        for (facing: EnumFacing in facings) {
             val position: BlockPos = getPos().offset(facing)
             functionToExecute(position, facing)
         }

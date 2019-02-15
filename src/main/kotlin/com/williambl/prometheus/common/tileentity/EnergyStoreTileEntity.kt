@@ -5,7 +5,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.energy.CapabilityEnergy
 
-open class EnergyStoreTileEntity: BaseEnergyTileEntity() {
+open class EnergyStoreTileEntity : BaseEnergyTileEntity() {
 
     var input = 2500
     var output = 2500
@@ -14,14 +14,14 @@ open class EnergyStoreTileEntity: BaseEnergyTileEntity() {
     init {
         setMaxInput(input)
         setMaxOutput(output)
-        setMaxEnergyStored(capacity)
+        maxEnergyStored = capacity
     }
 
     override fun update() {
         if (!this.hasWorld() || this.world.isRemote)
             return
 
-        executeForEachSide( { position: BlockPos, facing: EnumFacing ->
+        executeForEachSide({ position: BlockPos, facing: EnumFacing ->
 
             val tileEntity = this.getWorld().getTileEntity(position)
             if (tileEntity == null || tileEntity.isInvalid || !tileEntity.hasCapability(CapabilityEnergy.ENERGY, facing.opposite))

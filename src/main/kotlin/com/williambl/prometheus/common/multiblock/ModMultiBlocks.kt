@@ -63,21 +63,21 @@ object ModMultiBlocks {
             createBlockInfo(-2, 0, -2, ModBlocks.ancientCasing),
 
             createBlockInfo(2, -1, 2, ModBlocks.ancientCasing),
-            createBlockInfo(2,-1, 1, ModBlocks.ancientCasing),
-            createBlockInfo(2,-1, 0, ModBlocks.ancientCasing),
-            createBlockInfo(2,-1, -1, ModBlocks.ancientCasing),
-            createBlockInfo(2,-1, -2, ModBlocks.ancientCasing),
-            createBlockInfo(1,-1, 2, ModBlocks.ancientCasing),
-            createBlockInfo(1,-1, -2, ModBlocks.ancientCasing),
-            createBlockInfo(0,-1, 2, ModBlocks.ancientCasing),
-            createBlockInfo(0,-1, -2, ModBlocks.ancientCasing),
-            createBlockInfo(-1,-1, 2, ModBlocks.ancientCasing),
-            createBlockInfo(-1,-1, -2, ModBlocks.ancientCasing),
-            createBlockInfo(-2,-1, 2, ModBlocks.ancientCasing),
-            createBlockInfo(-2,-1, 1, ModBlocks.ancientCasing),
-            createBlockInfo(-2,-1, 0, ModBlocks.ancientCasing),
-            createBlockInfo(-2,-1, -1, ModBlocks.ancientCasing),
-            createBlockInfo(-2,-1, -2, ModBlocks.ancientCasing),
+            createBlockInfo(2, -1, 1, ModBlocks.ancientCasing),
+            createBlockInfo(2, -1, 0, ModBlocks.ancientCasing),
+            createBlockInfo(2, -1, -1, ModBlocks.ancientCasing),
+            createBlockInfo(2, -1, -2, ModBlocks.ancientCasing),
+            createBlockInfo(1, -1, 2, ModBlocks.ancientCasing),
+            createBlockInfo(1, -1, -2, ModBlocks.ancientCasing),
+            createBlockInfo(0, -1, 2, ModBlocks.ancientCasing),
+            createBlockInfo(0, -1, -2, ModBlocks.ancientCasing),
+            createBlockInfo(-1, -1, 2, ModBlocks.ancientCasing),
+            createBlockInfo(-1, -1, -2, ModBlocks.ancientCasing),
+            createBlockInfo(-2, -1, 2, ModBlocks.ancientCasing),
+            createBlockInfo(-2, -1, 1, ModBlocks.ancientCasing),
+            createBlockInfo(-2, -1, 0, ModBlocks.ancientCasing),
+            createBlockInfo(-2, -1, -1, ModBlocks.ancientCasing),
+            createBlockInfo(-2, -1, -2, ModBlocks.ancientCasing),
 
             createBlockInfo(2, -2, 2, ModBlocks.ancientCasing),
             createBlockInfo(2, -2, 1, ModBlocks.ancientCasing),
@@ -141,6 +141,6 @@ object ModMultiBlocks {
     ))
 
     fun createBlockInfo(x: Int, y: Int, z: Int, block: Block): MultiBlock.MultiBlockBlockInfo {
-        return MultiBlock.MultiBlockBlockInfo(BlockPos(x,y,z), block.defaultState)
+        return MultiBlock.MultiBlockBlockInfo(BlockPos(x, y, z), block.defaultState)
     }
 }

@@ -24,7 +24,7 @@ object ModBlocks {
 
     @SubscribeEvent
     @JvmStatic
-    fun registerBlocks(event: RegistryEvent.Register<Block> ) {
+    fun registerBlocks(event: RegistryEvent.Register<Block>) {
         event.registry.registerAll(*blocks.toTypedArray())
         println("registering blocks...")
     }

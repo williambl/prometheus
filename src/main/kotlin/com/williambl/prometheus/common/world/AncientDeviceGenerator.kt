@@ -1,24 +1,18 @@
 package com.williambl.prometheus.common.world
 
-import net.minecraft.block.Block
+import net.minecraft.util.Mirror
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.Rotation
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
 import net.minecraft.world.World
 import net.minecraft.world.WorldServer
-import net.minecraft.world.gen.feature.WorldGenerator
-import net.minecraft.world.gen.structure.template.Template
-import java.util.*
-import net.minecraft.world.gen.structure.template.TemplateManager
-import net.minecraft.block.state.IBlockState
-import net.minecraft.util.Mirror
-import net.minecraft.util.Rotation
-import net.minecraft.util.math.MathHelper
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
-import net.minecraftforge.fml.common.IWorldGenerator
-import net.minecraft.util.math.ChunkPos
 import net.minecraft.world.gen.structure.template.PlacementSettings
-
+import net.minecraft.world.gen.structure.template.Template
+import net.minecraftforge.fml.common.IWorldGenerator
+import java.util.*
 
 
 class AncientDeviceGenerator : IWorldGenerator {
@@ -35,7 +29,7 @@ class AncientDeviceGenerator : IWorldGenerator {
     }
 
     private fun generateStructure(world: World, chunkX: Int, chunkZ: Int, template: Template) {
-        val position = BlockPos(chunkX*16+8, world.rand.nextInt(64), chunkZ*16+8)
+        val position = BlockPos(chunkX * 16 + 8, world.rand.nextInt(64), chunkZ * 16 + 8)
 
         val placementSettings = PlacementSettings().setMirror(Mirror.NONE)
                 .setRotation(Rotation.NONE).setIgnoreEntities(false).setChunk((ChunkPos(chunkX, chunkZ)))
@@ -51,8 +45,8 @@ class AncientDeviceGenerator : IWorldGenerator {
     fun findChunkCoords(world: World): ChunkPos {
         if (!::chunkCoords.isInitialized) {
             val seed = world.seed
-            val chunkX: Int = (Math.sin((Math.abs(seed / 30)).toDouble())*300).toInt()
-            val chunkY: Int = (Math.cos((Math.abs(seed / 15)).toDouble())*300).toInt()
+            val chunkX: Int = (Math.sin((Math.abs(seed / 30)).toDouble()) * 300).toInt()
+            val chunkY: Int = (Math.cos((Math.abs(seed / 15)).toDouble()) * 300).toInt()
             chunkCoords = ChunkPos(chunkX, chunkY)
             println(chunkCoords)
         }

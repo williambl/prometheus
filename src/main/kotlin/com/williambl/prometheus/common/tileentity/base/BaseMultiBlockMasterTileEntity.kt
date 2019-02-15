@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-open class BaseMultiBlockMasterTileEntity(maxInput: Int, maxOutput: Int, maxStored: Int): BaseEnergyTileEntity() {
+open class BaseMultiBlockMasterTileEntity(maxInput: Int, maxOutput: Int, maxStored: Int) : BaseEnergyTileEntity() {
 
     protected lateinit var multiBlock: MultiBlock
 
@@ -27,8 +27,8 @@ open class BaseMultiBlockMasterTileEntity(maxInput: Int, maxOutput: Int, maxStor
 
     open fun activateMultiBlock() {}
 
-    protected open fun checkMultiBlock(world: World, pos: BlockPos) : Boolean {
-        getMultiBlockRepresentation().getAllBlockInfos().forEach { checkingBI->
+    protected open fun checkMultiBlock(world: World, pos: BlockPos): Boolean {
+        getMultiBlockRepresentation().getAllBlockInfos().forEach { checkingBI ->
             if (world.getBlockState(checkingBI.pos) != checkingBI.blockState)
                 return false
         }

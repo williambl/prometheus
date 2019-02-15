@@ -1,6 +1,5 @@
 package com.williambl.prometheus.common.block.base
 
-import com.williambl.prometheus.common.block.base.BaseEnergyBlock
 import com.williambl.prometheus.common.item.ModItems
 import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import com.williambl.prometheus.common.tileentity.base.BaseMultiBlockMasterTileEntity

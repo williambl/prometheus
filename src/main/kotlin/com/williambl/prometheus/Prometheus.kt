@@ -3,8 +3,8 @@ package com.williambl.prometheus
 import com.williambl.prometheus.common.PrometheusProxy
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 @Mod(modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter", modid = Prometheus.MODID,

@@ -1,8 +1,8 @@
 package com.williambl.prometheus.common.tileentity
 
 import com.williambl.prometheus.Prometheus
-import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraft.tileentity.TileEntity
+import net.minecraftforge.fml.common.registry.GameRegistry
 
 object ModTileEntities {
 
