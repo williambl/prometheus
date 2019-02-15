@@ -5,6 +5,7 @@ import com.williambl.prometheus.common.block.ModBlocks
 import com.williambl.prometheus.common.multiblock.ModMultiBlocks
 import com.williambl.prometheus.common.multiblock.MultiBlock
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
+import com.williambl.prometheus.common.tileentity.base.BaseMultiBlockMasterTileEntity
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.monster.EntityGiantZombie
 import net.minecraft.init.Blocks
@@ -12,20 +13,7 @@ import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
-
-    private lateinit var multiBlockPositions: Array<BlockPos>
-
-    private lateinit var multiBlock: MultiBlock
-
-    var isValidMultiBlock: Boolean = false
-
-    init {
-        setMaxInput(1000000)
-        setMaxOutput(0)
-        setMaxEnergyStored(0)
-
-    }
+open class AncientDeviceMasterTileEntity: BaseMultiBlockMasterTileEntity(1000000, 0, 0) {
 
     override fun update() {
         if (!this.hasWorld() || this.world.isRemote)
@@ -45,8 +33,8 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
         }
     }
 
-    fun activateMultiBlock() {
-        getMultiBlock().blocks.forEach { bi ->
+    override fun activateMultiBlock() {
+        getMultiBlockRepresentation().blocks.forEach { bi ->
             if (bi.pos != pos)
                 world.setBlockToAir(bi.pos)
         }
@@ -57,19 +45,10 @@ open class MultiBlockMasterTileEntity: BaseEnergyTileEntity() {
         world.setBlockToAir(pos)
     }
 
-    private fun checkMultiBlock(world: World, pos: BlockPos) : Boolean {
-        getMultiBlock().getAllBlockInfos().forEach { checkingBI->
-            if (world.getBlockState(checkingBI.pos) != checkingBI.blockState)
-                return false
-        }
-        return true
-    }
-
-    private fun getMultiBlock(): MultiBlock {
-        if (!::multiBlock.isInitialized)
+    override fun getMultiBlockRepresentation(): MultiBlock {
+        if (!isMultiBlockVarInitialised())
             multiBlock = MultiBlock(ModMultiBlocks.ancientDevice.getAllOffsetBlockInfos(pos))
         return multiBlock
     }
-
 }
 
