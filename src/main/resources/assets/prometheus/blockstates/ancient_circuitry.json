@@ -7,7 +7,8 @@
     "normal": [
       { "textures": { "all": "prometheus:blocks/ancient_circuitry_0" }, "weight": 1 },
       { "textures": { "all": "prometheus:blocks/ancient_circuitry_1" }, "weight": 1 },
-      { "textures": { "all": "prometheus:blocks/ancient_circuitry_2" }, "weight": 1 }
+      { "textures": { "all": "prometheus:blocks/ancient_circuitry_2" }, "weight": 1 },
+      { "textures": { "all": "prometheus:blocks/ancient_circuitry_3" }, "weight": 1 }
     ],
     "inventory": [{
       "textures": {"all": "prometheus:blocks/ancient_circuitry_0"}
