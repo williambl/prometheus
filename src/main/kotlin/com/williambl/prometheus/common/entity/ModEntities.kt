@@ -21,7 +21,7 @@ object ModEntities {
                 .id(ResourceLocation(Prometheus.MODID, "promethean"), id++)
                 .name("promethean")
                 .egg(0xFFFFFF, 0xAAAAAA)
-                .tracker(64, 20, false)
+                .tracker(64, 2, true)
                 .build()
         e.registry.register(entry)
         LootTableList.register(EntityPromethean.loot)
