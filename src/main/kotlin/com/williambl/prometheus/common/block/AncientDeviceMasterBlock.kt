@@ -1,5 +1,6 @@
-package com.williambl.prometheus.common.block.base
+package com.williambl.prometheus.common.block
 
+import com.williambl.prometheus.common.block.base.BaseEnergyBlock
 import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
