@@ -5,6 +5,8 @@ import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import com.williambl.prometheus.common.tileentity.base.BaseMultiBlockMasterTileEntity
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
+import net.minecraft.block.properties.PropertyBool
+import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -18,6 +20,7 @@ open class BaseMultiBlockMasterBlock(registryName: String, tab: CreativeTabs, so
                                      lightLevel: Float, material: Material) : BaseEnergyBlock(registryName, tab, soundType, hardness,
         resistance, lightLevel, material) {
 
+    var complete: PropertyBool = PropertyBool.create("complete")
 
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
         return BaseMultiBlockMasterTileEntity(0, 0, 0)
@@ -40,4 +43,17 @@ open class BaseMultiBlockMasterBlock(registryName: String, tab: CreativeTabs, so
         return true
     }
 
+    override fun createBlockState(): BlockStateContainer {return BlockStateContainer(this, complete)}
+
+    fun activate(worldIn: World, pos: BlockPos, blockstate: IBlockState) {
+        worldIn.setBlockState(pos, blockstate.withProperty(complete, true))
+    }
+
+    fun deactivate(worldIn: World, pos: BlockPos, blockstate: IBlockState) {
+        worldIn.setBlockState(pos, blockstate.withProperty(complete, false))
+    }
+
+    fun isPowered(blockstate: IBlockState): Boolean {
+        return blockstate.getValue(complete)
+    }
 }
