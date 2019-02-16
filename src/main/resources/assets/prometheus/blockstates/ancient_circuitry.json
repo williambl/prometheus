@@ -1,13 +1,16 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:cube_all",
-    "textures": {
-      "all": "blocks/dirt"
-    }
+    "model": "minecraft:cube_all"
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}]
+    "normal": [
+      { "textures": { "all": "prometheus:blocks/ancient_circuitry_0" }, "weight": 1 },
+      { "textures": { "all": "prometheus:blocks/ancient_circuitry_1" }, "weight": 1 },
+      { "textures": { "all": "prometheus:blocks/ancient_circuitry_2" }, "weight": 1 }
+    ],
+    "inventory": [{
+      "textures": {"all": "prometheus:blocks/ancient_circuitry_0"}
+    }]
   }
 }
