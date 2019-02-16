@@ -20,7 +20,13 @@ open class BaseMultiBlockMasterBlock(registryName: String, tab: CreativeTabs, so
                                      lightLevel: Float, material: Material) : BaseEnergyBlock(registryName, tab, soundType, hardness,
         resistance, lightLevel, material) {
 
-    var complete: PropertyBool = PropertyBool.create("complete")
+    companion object {
+        val complete: PropertyBool = PropertyBool.create("complete")
+    }
+
+    init {
+        this.defaultState = this.blockState.baseState.withProperty(complete, false)
+    }
 
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
         return BaseMultiBlockMasterTileEntity(0, 0, 0)
@@ -43,17 +49,14 @@ open class BaseMultiBlockMasterBlock(registryName: String, tab: CreativeTabs, so
         return true
     }
 
-    override fun createBlockState(): BlockStateContainer {return BlockStateContainer(this, complete)}
+    override fun createBlockState(): BlockStateContainer { return BlockStateContainer(this, complete) }
 
-    fun activate(worldIn: World, pos: BlockPos, blockstate: IBlockState) {
-        worldIn.setBlockState(pos, blockstate.withProperty(complete, true))
+    override fun getStateFromMeta(meta: Int): IBlockState {
+        return this.defaultState.withProperty(complete, meta > 0)
     }
 
-    fun deactivate(worldIn: World, pos: BlockPos, blockstate: IBlockState) {
-        worldIn.setBlockState(pos, blockstate.withProperty(complete, false))
+    override fun getMetaFromState(state: IBlockState): Int {
+        return if (state.getValue(complete)) 1 else 0
     }
 
-    fun isPowered(blockstate: IBlockState): Boolean {
-        return blockstate.getValue(complete)
-    }
 }
