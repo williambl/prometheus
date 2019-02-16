@@ -3,11 +3,15 @@
   "defaults": {
     "model": "minecraft:cube_all",
     "textures": {
-      "all": "blocks/dirt"
+      "all": "prometheus:blocks/ancient_core_inactive"
     }
   },
   "variants": {
     "normal": [{}],
-    "inventory": [{}]
+    "inventory": [{}],
+    "complete": {
+      "false": { "textures": { "all": "prometheus:blocks/ancient_core_inactive" } },
+      "true": { "textures": { "all": "prometheus:blocks/ancient_core_active" } }
+    }
   }
 }
