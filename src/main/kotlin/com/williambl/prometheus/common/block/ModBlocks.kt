@@ -14,12 +14,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @Mod.EventBusSubscriber
 object ModBlocks {
 
-    val energyStore = EnergyStoreBlock("energy_store", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON)
-    val multiBlockMaster = AncientDeviceMasterBlock("ancient_core", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON)
+    val ancientDeviceMaster = AncientDeviceMasterBlock("ancient_core", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON)
     val ancientCircuitry = BaseBlock("ancient_circuitry", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON)
     val ancientCasing = BaseBlock("ancient_casing", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON)
 
-    val blocks = listOf<Block>(energyStore, multiBlockMaster, ancientCircuitry, ancientCasing)
+    val blocks = listOf<Block>(ancientDeviceMaster, ancientCircuitry, ancientCasing)
 
     @SubscribeEvent
     @JvmStatic
