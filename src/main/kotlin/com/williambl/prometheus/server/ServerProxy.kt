@@ -7,8 +7,4 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent
 
 class ServerProxy : PrometheusProxy() {
 
-    override fun serverStart(e: FMLServerStartingEvent) {
-        super.serverStart(e)
-        ModCommands.registerCommands(e)
-    }
 }

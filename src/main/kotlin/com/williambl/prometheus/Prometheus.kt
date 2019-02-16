@@ -3,9 +3,7 @@ package com.williambl.prometheus
 import com.williambl.prometheus.common.PrometheusProxy
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
-import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.event.*
 
 @Mod(modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter", modid = Prometheus.MODID,
         name = Prometheus.NAME, version = Prometheus.VERSION, dependencies = "required-after:forgelin")
@@ -33,5 +31,10 @@ object Prometheus {
     @Mod.EventHandler
     fun postInit(event: FMLPostInitializationEvent) {
         proxy.postInit()
+    }
+
+    @Mod.EventHandler
+    fun serverStart(event: FMLServerStartingEvent) {
+        proxy.serverStart(event)
     }
 }

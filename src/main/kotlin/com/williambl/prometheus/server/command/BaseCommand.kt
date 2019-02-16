@@ -1,11 +1,12 @@
 package com.williambl.prometheus.server.command
 
+import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommand
 import net.minecraft.command.ICommandSender
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 
-open class BaseCommand : ICommand {
+open class BaseCommand : CommandBase() {
 
     open val commandName = ""
     open val commandAliases = mutableListOf<String>()
@@ -26,18 +27,8 @@ open class BaseCommand : ICommand {
         return mutableListOf()
     }
 
-    override fun compareTo(other: ICommand?): Int {
-        if (other != null)
-            return if (this.name == other.name) 1 else 0
-        return 0
-    }
-
     override fun checkPermission(server: MinecraftServer, sender: ICommandSender): Boolean {
         return sender.canUseCommand(this.permissionLevel, this.name)
-    }
-
-    override fun isUsernameIndex(args: Array<String>, index: Int): Boolean {
-        return false
     }
 
     override fun getAliases(): MutableList<String> {
