@@ -20,7 +20,7 @@ open class AncientDeviceMasterTileEntity : BaseMultiBlockMasterTileEntity(100000
         isValidMultiBlock = checkMultiBlock(world, pos)
 
         if (isValidMultiBlock && !wasValidMultiBlock) {
-            maxEnergyStored = 1000000
+            maxEnergyStored = 500000000
             setCompleteBlockstate(world, pos, true)
             println("now valid multiblock!")
         }
