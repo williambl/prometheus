@@ -3,7 +3,7 @@
   "defaults": {
     "model": "minecraft:cube_all",
     "textures": {
-      "all": "blocks/dirt"
+      "all": "prometheus:blocks/ancient_casing"
     }
   },
   "variants": {
