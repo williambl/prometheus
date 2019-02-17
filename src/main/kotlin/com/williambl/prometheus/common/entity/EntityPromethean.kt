@@ -1,6 +1,7 @@
 package com.williambl.prometheus.common.entity
 
 import com.williambl.prometheus.Prometheus
+import com.williambl.prometheus.common.entity.ai.EntityAIPrometheanAttack
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.SharedMonsterAttributes
@@ -53,8 +54,9 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
 
     override fun initEntityAI() {
         this.tasks.addTask(0, EntityAISwimming(this))
-        this.tasks.addTask(5, EntityAIMoveTowardsRestriction(this, 1.0))
-        this.tasks.addTask(7, EntityAIWander(this, 1.0))
+        this.tasks.addTask(2, EntityAIPrometheanAttack(this, 5.0, true))
+        this.tasks.addTask(5, EntityAIMoveTowardsRestriction(this, 5.0))
+        this.tasks.addTask(7, EntityAIWander(this, 5.0))
         this.tasks.addTask(8, EntityAIWatchClosest(this, EntityPlayer::class.java, 8.0f))
         this.tasks.addTask(8, EntityAILookIdle(this))
         this.applyEntityAI()
