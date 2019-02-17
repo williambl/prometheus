@@ -15,6 +15,5 @@ class EntityAIPrometheanAttack(private val entity: EntityPromethean, speed: Doub
 
     override fun updateTask() {
         super.updateTask()
-        this.entity.addRF(1)
     }
 }

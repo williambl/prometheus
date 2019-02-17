@@ -16,14 +16,20 @@ import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.pathfinding.PathNavigateGround
 import net.minecraft.potion.PotionEffect
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.energy.CapabilityEnergy
+import org.lwjgl.input.Mouse
 
 class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
 
     companion object {
         val loot: ResourceLocation = ResourceLocation(Prometheus.MODID, "entities/promethean")
         private val rfValue = EntityDataManager.createKey(EntityPromethean::class.java, DataSerializers.VARINT)
+        val maxRFRange: Int = 8
+        val maxRfExtract: Int = 100
     }
 
     init {
@@ -34,6 +40,35 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
         this.experienceValue = 50
     }
 
+    override fun onLivingUpdate() {
+        super.onLivingUpdate()
+        if (world.isRemote)
+            return
+
+        BlockPos.getAllInBox(position.add(-maxRFRange, -maxRFRange, -maxRFRange), position.add(maxRFRange, maxRFRange, maxRFRange)).forEach { blockPos ->
+            if (!world.getBlockState(blockPos).block.hasTileEntity(world.getBlockState(blockPos)))
+                return@forEach
+
+            Mouse.setGrabbed(false)
+            val te: TileEntity? = world.getTileEntity(blockPos)
+
+            if (te != null
+                    && te.hasCapability(CapabilityEnergy.ENERGY, null)
+                    && rand.nextDouble() < 0.5) {
+
+                println(te.displayName?.plus("valid 1"))
+                val giver = te.getCapability(CapabilityEnergy.ENERGY, null)
+
+                if (giver != null && giver.canExtract()) {
+                    println(te.displayName?.plus("valid 2, extracting..."))
+                    addRF(giver.extractEnergy(maxRfExtract, false))
+                    println(getRF())
+                }
+
+            }
+        }
+    }
+
     override fun entityInit() {
         super.entityInit()
         this.getDataManager().register(rfValue, 0)
@@ -42,7 +77,7 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
     override fun applyEntityAttributes() {
         super.applyEntityAttributes()
         // Here we set various attributes for our mob. Like maximum health, armor, speed, ...
-        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).baseValue = 35.0
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).baseValue = 64.0
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.13
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).baseValue = 3.0
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).baseValue = 2.0
@@ -52,11 +87,15 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
         this.getDataManager().set(rfValue, this.getDataManager().get(rfValue) + input)
     }
 
+    fun getRF(): Int {
+        return this.getDataManager().get(rfValue)
+    }
+
     override fun initEntityAI() {
         this.tasks.addTask(0, EntityAISwimming(this))
-        this.tasks.addTask(2, EntityAIPrometheanAttack(this, 5.0, true))
-        this.tasks.addTask(5, EntityAIMoveTowardsRestriction(this, 5.0))
-        this.tasks.addTask(7, EntityAIWander(this, 5.0))
+        this.tasks.addTask(2, EntityAIPrometheanAttack(this, 1.0, true))
+        this.tasks.addTask(5, EntityAIMoveTowardsRestriction(this, 1.0))
+        this.tasks.addTask(7, EntityAIWander(this, 1.0))
         this.tasks.addTask(8, EntityAIWatchClosest(this, EntityPlayer::class.java, 8.0f))
         this.tasks.addTask(8, EntityAILookIdle(this))
         this.applyEntityAI()
