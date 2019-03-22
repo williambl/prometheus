@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.*
+import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.monster.EntityIronGolem
 import net.minecraft.entity.monster.EntityMob
 import net.minecraft.entity.monster.EntityPigZombie
@@ -23,7 +24,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.energy.CapabilityEnergy
 import net.minecraftforge.energy.EnergyStorage
+import org.apache.logging.log4j.core.util.UuidUtil
 import org.lwjgl.input.Mouse
+import java.util.*
 
 class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
 
@@ -32,6 +35,8 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
         private val rfValue = EntityDataManager.createKey(EntityPromethean::class.java, DataSerializers.VARINT)
         val maxRFRange: Int = 8
         val maxRfExtract: Int = 100
+        val speedModifierUUID = UUID.fromString("d570087e-4cfb-11e9-8646-d663bd873d93")
+        val speedModifier = AttributeModifier(speedModifierUUID, "RF speed boost", 0.3, 0)
     }
 
     init {
@@ -48,6 +53,7 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
             return
 
         implodeRF()
+        updateEntityAttributes()
     }
 
     private fun implodeRF() {
@@ -72,6 +78,14 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
                 }
             }
         }
+    }
+
+    private fun updateEntityAttributes() {
+        if (getRF() > 1000) {
+            if (!this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(speedModifier))
+                this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(speedModifier)
+        } else
+            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(speedModifier)
     }
 
     override fun entityInit() {
