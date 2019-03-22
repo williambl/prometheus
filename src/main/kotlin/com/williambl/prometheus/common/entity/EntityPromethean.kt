@@ -17,10 +17,12 @@ import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.pathfinding.PathNavigateGround
 import net.minecraft.potion.PotionEffect
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.energy.CapabilityEnergy
+import net.minecraftforge.energy.EnergyStorage
 import org.lwjgl.input.Mouse
 
 class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
@@ -45,26 +47,29 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
         if (world.isRemote)
             return
 
+        implodeRF()
+    }
+
+    private fun implodeRF() {
         BlockPos.getAllInBox(position.add(-maxRFRange, -maxRFRange, -maxRFRange), position.add(maxRFRange, maxRFRange, maxRFRange)).forEach { blockPos ->
             if (!world.getBlockState(blockPos).block.hasTileEntity(world.getBlockState(blockPos)))
                 return@forEach
 
-            Mouse.setGrabbed(false)
             val te: TileEntity? = world.getTileEntity(blockPos)
 
-            if (te != null
-                    && te.hasCapability(CapabilityEnergy.ENERGY, null)
-                    && rand.nextDouble() < 0.5) {
-
+            val facing = EnumFacing.random(rand)
+            if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, facing)) {
                 println(te.displayName?.plus("valid 1"))
-                val giver = te.getCapability(CapabilityEnergy.ENERGY, null)
+                val giver = te.getCapability(CapabilityEnergy.ENERGY, facing)
+                println(te.displayName?.plus(giver?.energyStored))
 
-                if (giver != null && giver.canExtract()) {
+                if (giver != null && giver.energyStored > 1000) {
                     println(te.displayName?.plus("valid 2, extracting..."))
-                    addRF(giver.extractEnergy(maxRfExtract, false))
+                    world.setBlockToAir(blockPos)
+                    world.newExplosion(null, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), (Math.log(giver.energyStored.toDouble())/4).toFloat(), true, true)
+                    addRF(giver.energyStored)
                     println(getRF())
                 }
-
             }
         }
     }
