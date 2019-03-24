@@ -36,7 +36,11 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
         val maxRFRange: Int = 8
         val maxRfExtract: Int = 100
         val speedModifierUUID = UUID.fromString("d570087e-4cfb-11e9-8646-d663bd873d93")
+        val healthModifierUUID = UUID.fromString("5fc9c4c3-a8aa-4003-8667-a44e9a5df49a")
+        val armorModifierUUID = UUID.fromString("a0b3494d-eeba-42dd-bddd-3b6de0f90dfb")
         val speedModifier = AttributeModifier(speedModifierUUID, "RF speed boost", 0.3, 0)
+        val healthModifier = AttributeModifier(healthModifierUUID, "RF max health boost", 128.0, 0)
+        val armorModifier = AttributeModifier(armorModifierUUID, "RF armor boost", 128.0, 0)
     }
 
     init {
@@ -44,7 +48,7 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
         this.setSize(0.9F, 3.5F)
         this.isImmuneToFire = true
         (this.getNavigator() as PathNavigateGround).canSwim = true
-        this.experienceValue = 50
+        this.experienceValue = 128
     }
 
     override fun onLivingUpdate() {
@@ -86,6 +90,18 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
                 this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(speedModifier)
         } else
             this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(speedModifier)
+
+        if (getRF() > 64000) {
+            if (!this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).hasModifier(healthModifier))
+                this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(healthModifier)
+        } else
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(healthModifier)
+
+        if (getRF() > 128000) {
+            if (!this.getEntityAttribute(SharedMonsterAttributes.ARMOR).hasModifier(armorModifier))
+                this.getEntityAttribute(SharedMonsterAttributes.ARMOR).applyModifier(armorModifier)
+        } else
+            this.getEntityAttribute(SharedMonsterAttributes.ARMOR).removeModifier(armorModifier)
     }
 
     override fun entityInit() {
@@ -97,9 +113,10 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
         super.applyEntityAttributes()
         // Here we set various attributes for our mob. Like maximum health, armor, speed, ...
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).baseValue = 64.0
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).baseValue = 64.0
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.13
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).baseValue = 3.0
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).baseValue = 2.0
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).baseValue = 32.0
     }
 
     fun addRF(input: Int) {
