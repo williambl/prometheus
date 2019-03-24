@@ -13,6 +13,7 @@ import net.minecraft.entity.monster.EntityPigZombie
 import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.pathfinding.PathNavigateGround
@@ -102,6 +103,17 @@ class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
                 this.getEntityAttribute(SharedMonsterAttributes.ARMOR).applyModifier(armorModifier)
         } else
             this.getEntityAttribute(SharedMonsterAttributes.ARMOR).removeModifier(armorModifier)
+
+    }
+
+    override fun writeEntityToNBT(compound: NBTTagCompound) {
+        super.writeEntityToNBT(compound)
+        compound.setInteger("rfValue", this.getRF())
+    }
+
+    override fun readEntityFromNBT(compound: NBTTagCompound) {
+        super.readEntityFromNBT(compound)
+        this.getDataManager().set(rfValue, compound.getInteger("rfValue"))
     }
 
     override fun entityInit() {
