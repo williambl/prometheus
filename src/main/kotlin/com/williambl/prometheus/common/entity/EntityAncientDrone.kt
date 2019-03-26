@@ -32,7 +32,7 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
         val loot: ResourceLocation = ResourceLocation(Prometheus.MODID, "entities/ancient_drone")
         val maxRFRange: Int = 8
         val speedModifierUUID = UUID.fromString("d570087e-4cfb-11e9-8646-d663bd873d93")
-        val speedModifier = AttributeModifier(speedModifierUUID, "RF speed boost", 0.3, 0)
+        val speedModifier = AttributeModifier(speedModifierUUID, "health speed boost", 0.3, 0)
     }
 
     init {
