@@ -1,8 +1,8 @@
 package com.williambl.prometheus.client.render
 
-import com.williambl.prometheus.client.render.entity.RenderEntityPromethean
+import com.williambl.prometheus.client.render.entity.RenderEntityAncientDrone
 import com.williambl.prometheus.common.block.ModBlocks
-import com.williambl.prometheus.common.entity.EntityPromethean
+import com.williambl.prometheus.common.entity.EntityAncientDrone
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.item.Item
 import net.minecraftforge.client.event.ModelRegistryEvent
@@ -25,6 +25,6 @@ object ModModels {
     }
 
     fun registerEntityModels() {
-        RenderingRegistry.registerEntityRenderingHandler(EntityPromethean::class.java, RenderEntityPromethean.Factory)
+        RenderingRegistry.registerEntityRenderingHandler(EntityAncientDrone::class.java, RenderEntityAncientDrone.Factory)
     }
 }

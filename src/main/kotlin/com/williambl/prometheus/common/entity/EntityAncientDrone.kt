@@ -24,16 +24,13 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.energy.CapabilityEnergy
-import net.minecraftforge.energy.EnergyStorage
-import org.apache.logging.log4j.core.util.UuidUtil
-import org.lwjgl.input.Mouse
 import java.util.*
 
-class EntityPromethean(worldIn: World) : EntityMob(worldIn) {
+class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
 
     companion object {
-        val loot: ResourceLocation = ResourceLocation(Prometheus.MODID, "entities/promethean")
-        private val rfValue = EntityDataManager.createKey(EntityPromethean::class.java, DataSerializers.VARINT)
+        val loot: ResourceLocation = ResourceLocation(Prometheus.MODID, "entities/ancient_drone")
+        private val rfValue = EntityDataManager.createKey(EntityAncientDrone::class.java, DataSerializers.VARINT)
         val maxRFRange: Int = 8
         val maxRfExtract: Int = 100
         val speedModifierUUID = UUID.fromString("d570087e-4cfb-11e9-8646-d663bd873d93")
