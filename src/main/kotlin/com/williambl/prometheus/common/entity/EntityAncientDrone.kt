@@ -43,6 +43,10 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
         this.experienceValue = 128
     }
 
+    override fun isImmuneToExplosions(): Boolean {
+        return health > 32
+    }
+
     override fun onLivingUpdate() {
         super.onLivingUpdate()
         if (world.isRemote)
@@ -110,23 +114,10 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
 
     private fun applyEntityAI() {
         this.tasks.addTask(6, EntityAIMoveThroughVillage(this, 1.0, false))
-        this.targetTasks.addTask(1, EntityAIHurtByTarget(this, true, EntityPigZombie::class.java))
+        this.targetTasks.addTask(1, EntityAIHurtByTarget(this, false))
         this.targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, true))
         this.targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityVillager::class.java, false))
         this.targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityIronGolem::class.java, true))
-    }
-
-    override fun attackEntityAsMob(entityIn: Entity): Boolean {
-        return if (super.attackEntityAsMob(entityIn)) {
-            if (entityIn is EntityLivingBase) {
-                // This zombie gives health boost and regeneration when it attacks
-                entityIn.addPotionEffect(PotionEffect(MobEffects.HEALTH_BOOST, 200))
-                entityIn.addPotionEffect(PotionEffect(MobEffects.REGENERATION, 200))
-            }
-            true
-        } else {
-            false
-        }
     }
 
     override fun getLootTable(): ResourceLocation? {
