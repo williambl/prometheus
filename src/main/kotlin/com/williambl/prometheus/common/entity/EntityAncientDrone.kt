@@ -30,15 +30,9 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
 
     companion object {
         val loot: ResourceLocation = ResourceLocation(Prometheus.MODID, "entities/ancient_drone")
-        private val rfValue = EntityDataManager.createKey(EntityAncientDrone::class.java, DataSerializers.VARINT)
         val maxRFRange: Int = 8
-        val maxRfExtract: Int = 100
         val speedModifierUUID = UUID.fromString("d570087e-4cfb-11e9-8646-d663bd873d93")
-        val healthModifierUUID = UUID.fromString("5fc9c4c3-a8aa-4003-8667-a44e9a5df49a")
-        val armorModifierUUID = UUID.fromString("a0b3494d-eeba-42dd-bddd-3b6de0f90dfb")
         val speedModifier = AttributeModifier(speedModifierUUID, "RF speed boost", 0.3, 0)
-        val healthModifier = AttributeModifier(healthModifierUUID, "RF max health boost", 128.0, 0)
-        val armorModifier = AttributeModifier(armorModifierUUID, "RF armor boost", 128.0, 0)
     }
 
     init {
@@ -54,7 +48,8 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
         if (world.isRemote)
             return
 
-        implodeRF()
+        if (health < maxHealth)
+            implodeRF()
         updateEntityAttributes()
     }
 
@@ -71,69 +66,36 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
                 val giver = te.getCapability(CapabilityEnergy.ENERGY, facing)
                 println(te.displayName?.plus(giver?.energyStored))
 
-                if (giver != null && giver.energyStored > 1000) {
+                if (giver != null && giver.energyStored >= 800000) {
                     println(te.displayName?.plus("valid 2, extracting..."))
                     world.setBlockToAir(blockPos)
                     world.newExplosion(null, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), (Math.log(giver.energyStored.toDouble())/4).toFloat(), true, true)
-                    addRF(giver.energyStored)
-                    println(getRF())
+                    println(health)
+                    health += (giver.energyStored / 200000)
+                    println(health)
+                    return@implodeRF
                 }
             }
         }
     }
 
     private fun updateEntityAttributes() {
-        if (getRF() > 1000) {
+        if (health > 32) {
             if (!this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(speedModifier))
                 this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(speedModifier)
         } else
             this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(speedModifier)
 
-        if (getRF() > 64000) {
-            if (!this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).hasModifier(healthModifier))
-                this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(healthModifier)
-        } else
-            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(healthModifier)
-
-        if (getRF() > 128000) {
-            if (!this.getEntityAttribute(SharedMonsterAttributes.ARMOR).hasModifier(armorModifier))
-                this.getEntityAttribute(SharedMonsterAttributes.ARMOR).applyModifier(armorModifier)
-        } else
-            this.getEntityAttribute(SharedMonsterAttributes.ARMOR).removeModifier(armorModifier)
-
-    }
-
-    override fun writeEntityToNBT(compound: NBTTagCompound) {
-        super.writeEntityToNBT(compound)
-        compound.setInteger("rfValue", this.getRF())
-    }
-
-    override fun readEntityFromNBT(compound: NBTTagCompound) {
-        super.readEntityFromNBT(compound)
-        this.getDataManager().set(rfValue, compound.getInteger("rfValue"))
-    }
-
-    override fun entityInit() {
-        super.entityInit()
-        this.getDataManager().register(rfValue, 0)
     }
 
     override fun applyEntityAttributes() {
         super.applyEntityAttributes()
         // Here we set various attributes for our mob. Like maximum health, armor, speed, ...
-        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).baseValue = 64.0
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).baseValue = 128.0
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).baseValue = 64.0
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.13
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).baseValue = 3.0
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).baseValue = 32.0
-    }
-
-    fun addRF(input: Int) {
-        this.getDataManager().set(rfValue, this.getDataManager().get(rfValue) + input)
-    }
-
-    fun getRF(): Int {
-        return this.getDataManager().get(rfValue)
     }
 
     override fun initEntityAI() {
