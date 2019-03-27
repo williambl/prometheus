@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
+import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.monster.EntityIronGolem
 import net.minecraft.entity.monster.EntityMob
 import net.minecraft.entity.monster.EntityPigZombie
@@ -77,6 +78,13 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
                 }
             }
         }
+    }
+
+    override fun onStruckByLightning(lightningBolt: EntityLightningBolt) {
+        super.onStruckByLightning(lightningBolt)
+        if (health > 32)
+            world.newExplosion(this, posX, posY, posZ, 4F, true, true)
+        health -= 32
     }
 
     private fun updateEntityAttributes() {
