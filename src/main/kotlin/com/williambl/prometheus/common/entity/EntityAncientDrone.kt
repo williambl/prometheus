@@ -43,10 +43,6 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
         this.experienceValue = 128
     }
 
-    override fun isImmuneToExplosions(): Boolean {
-        return health > 32
-    }
-
     override fun onLivingUpdate() {
         super.onLivingUpdate()
         if (world.isRemote)
@@ -73,7 +69,7 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
                 if (giver != null && giver.energyStored >= 800000) {
                     println(te.displayName?.plus("valid 2, extracting..."))
                     world.setBlockToAir(blockPos)
-                    world.newExplosion(null, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), (Math.log(giver.energyStored.toDouble())/4).toFloat(), true, true)
+                    world.newExplosion(this, blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), (Math.log(giver.energyStored.toDouble())/4).toFloat(), true, true)
                     println(health)
                     health += (giver.energyStored / 200000)
                     println(health)
