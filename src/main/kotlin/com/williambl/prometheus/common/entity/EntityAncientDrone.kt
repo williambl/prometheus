@@ -2,24 +2,17 @@ package com.williambl.prometheus.common.entity
 
 import com.williambl.prometheus.Prometheus
 import com.williambl.prometheus.common.entity.ai.EntityAIPrometheanAttack
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.monster.EntityIronGolem
 import net.minecraft.entity.monster.EntityMob
-import net.minecraft.entity.monster.EntityPigZombie
 import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.MobEffects
-import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.datasync.DataSerializers
-import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.pathfinding.PathNavigateGround
-import net.minecraft.potion.PotionEffect
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.DamageSource
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
@@ -85,6 +78,20 @@ class EntityAncientDrone(worldIn: World) : EntityMob(worldIn) {
         if (health > 32)
             world.newExplosion(this, posX, posY, posZ, 4F, true, true)
         health -= 32
+    }
+
+    override fun isEntityInvulnerable(source: DamageSource): Boolean {
+        return super.isEntityInvulnerable(source)
+                || source.isFireDamage
+                || source.isExplosion
+    }
+
+    override fun canBreatheUnderwater(): Boolean {
+        return true
+    }
+
+    override fun isPushedByWater(): Boolean {
+        return false
     }
 
     private fun updateEntityAttributes() {
