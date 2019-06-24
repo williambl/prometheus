@@ -18,13 +18,10 @@ object ModModels {
 
     @SubscribeEvent
     @JvmStatic
-    fun registerItemBlockModels(event: ModelRegistryEvent) {
+    fun registerModels(event: ModelRegistryEvent) {
         ModBlocks.blocks.forEach { block ->
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, ModelResourceLocation(block.registryName!!, "inventory"))
         }
-    }
-
-    fun registerEntityModels() {
         RenderingRegistry.registerEntityRenderingHandler(EntityAncientDrone::class.java, RenderEntityAncientDrone.Factory)
     }
 }

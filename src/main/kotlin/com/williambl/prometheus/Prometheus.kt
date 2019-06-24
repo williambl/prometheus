@@ -1,9 +1,13 @@
 package com.williambl.prometheus
 
-import com.williambl.prometheus.common.PrometheusProxy
+import com.williambl.prometheus.common.tileentity.ModTileEntities
+import com.williambl.prometheus.common.world.ModWorld
+import com.williambl.prometheus.server.command.ModCommands
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.common.SidedProxy
-import net.minecraftforge.fml.common.event.*
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent
 
 @Mod(modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter", modid = Prometheus.MODID,
         name = Prometheus.NAME, version = Prometheus.VERSION, dependencies = "required-after:forgelin")
@@ -13,28 +17,22 @@ object Prometheus {
     const val NAME = "Prometheus"
     const val VERSION = "1.0.0"
 
-    @SidedProxy(
-            clientSide = "com.williambl.prometheus.client.ClientProxy",
-            serverSide = "com.williambl.prometheus.server.ServerProxy")
-    lateinit var proxy: PrometheusProxy
-
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
-        proxy.preInit()
     }
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-        proxy.init()
+        ModTileEntities.registerTileEntities()
+        ModWorld.registerWorldGenerators()
     }
 
     @Mod.EventHandler
     fun postInit(event: FMLPostInitializationEvent) {
-        proxy.postInit()
     }
 
     @Mod.EventHandler
     fun serverStart(event: FMLServerStartingEvent) {
-        proxy.serverStart(event)
+        ModCommands.registerCommands(event)
     }
 }
