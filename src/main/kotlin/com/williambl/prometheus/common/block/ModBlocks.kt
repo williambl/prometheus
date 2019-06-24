@@ -1,6 +1,8 @@
 package com.williambl.prometheus.common.block
 
 import com.williambl.prometheus.common.block.base.BaseBlock
+import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock
+import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -14,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @Mod.EventBusSubscriber
 object ModBlocks {
 
-    val ancientDeviceMaster = AncientDeviceMasterBlock("ancient_core", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON)
+    val ancientDeviceMaster = BaseMultiBlockMasterBlock("ancient_core", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON, ::AncientDeviceMasterTileEntity)
     val ancientCircuitry = BaseBlock("ancient_circuitry", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON)
     val ancientCasing = BaseBlock("ancient_casing", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON)
 

@@ -16,8 +16,8 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-open class BaseMultiBlockMasterBlock(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
-                                     lightLevel: Float, material: Material) : BaseEnergyBlock(registryName, tab, soundType, hardness,
+open class BaseMultiBlockMasterBlock<T : BaseMultiBlockMasterTileEntity>(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
+                                                                         lightLevel: Float, material: Material, val factory: () -> T) : BaseEnergyBlock(registryName, tab, soundType, hardness,
         resistance, lightLevel, material) {
 
     companion object {
@@ -29,7 +29,7 @@ open class BaseMultiBlockMasterBlock(registryName: String, tab: CreativeTabs, so
     }
 
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
-        return BaseMultiBlockMasterTileEntity(0, 0, 0)
+        return factory()
     }
 
     override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {

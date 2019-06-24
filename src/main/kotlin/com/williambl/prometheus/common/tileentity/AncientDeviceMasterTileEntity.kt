@@ -1,6 +1,5 @@
 package com.williambl.prometheus.common.tileentity
 
-import com.williambl.prometheus.common.block.AncientDeviceMasterBlock
 import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock
 import com.williambl.prometheus.common.multiblock.ModMultiBlocks
 import com.williambl.prometheus.common.multiblock.MultiBlock
@@ -51,7 +50,7 @@ open class AncientDeviceMasterTileEntity : BaseMultiBlockMasterTileEntity(100000
 
     fun setCompleteBlockstate(world: World, pos: BlockPos, value: Boolean) {
         val blockstate = world.getBlockState(pos)
-        world.setBlockState(pos, blockstate.withProperty(AncientDeviceMasterBlock.complete, value))
+        world.setBlockState(pos, blockstate.withProperty(BaseMultiBlockMasterBlock.complete, value))
     }
 }
 
