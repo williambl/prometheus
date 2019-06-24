@@ -1,7 +1,6 @@
 package com.williambl.prometheus.common.block.base
 
 import com.williambl.prometheus.common.item.ModItems
-import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import com.williambl.prometheus.common.tileentity.base.BaseMultiBlockMasterTileEntity
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -41,7 +40,7 @@ open class BaseMultiBlockMasterBlock<T : BaseMultiBlockMasterTileEntity>(registr
         if (playerIn.getHeldItem(hand).item != ModItems.multiBlockStarter)
             return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ)
 
-        val tileEntity = worldIn.getTileEntity(pos) as AncientDeviceMasterTileEntity
+        val tileEntity = worldIn.getTileEntity(pos) as T
 
         if (tileEntity.isValidMultiBlock && tileEntity.energyStored == tileEntity.maxEnergyStored)
             tileEntity.activateMultiBlock()
