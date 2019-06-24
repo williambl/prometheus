@@ -8,7 +8,9 @@ import net.minecraft.world.World
 
 open class BaseMultiBlockMasterTileEntity(maxInput: Int, maxOutput: Int, maxStored: Int) : BaseEnergyTileEntity() {
 
-    protected lateinit var multiBlock: MultiBlock
+    protected open val multiBlock: MultiBlock by lazy {
+        MultiBlock(arrayOf(ModMultiBlocks.createBlockInfo(0, 0, 0, Blocks.AIR)))
+    }
 
     var isValidMultiBlock: Boolean = false
 
@@ -28,21 +30,11 @@ open class BaseMultiBlockMasterTileEntity(maxInput: Int, maxOutput: Int, maxStor
     open fun activateMultiBlock() {}
 
     protected open fun checkMultiBlock(world: World, pos: BlockPos): Boolean {
-        getMultiBlockRepresentation().getAllBlockInfos().forEach { checkingBI ->
+        multiBlock.getAllBlockInfos().forEach { checkingBI ->
             if (world.getBlockState(checkingBI.pos) != checkingBI.blockState)
                 return false
         }
         return true
-    }
-
-    protected open fun getMultiBlockRepresentation(): MultiBlock {
-        if (!isMultiBlockVarInitialised())
-            multiBlock = MultiBlock(arrayOf(ModMultiBlocks.createBlockInfo(0, 0, 0, Blocks.AIR)))
-        return multiBlock
-    }
-
-    protected fun isMultiBlockVarInitialised(): Boolean {
-        return ::multiBlock.isInitialized
     }
 
 }

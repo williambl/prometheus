@@ -10,6 +10,10 @@ import net.minecraft.world.World
 
 open class AncientDeviceMasterTileEntity : BaseMultiBlockMasterTileEntity(1000000, 0, 0) {
 
+    override val multiBlock: MultiBlock by lazy {
+        MultiBlock(ModMultiBlocks.ancientDevice.getAllOffsetBlockInfos(pos))
+    }
+
     override fun update() {
         if (!this.hasWorld() || this.world.isRemote)
             return
@@ -31,7 +35,7 @@ open class AncientDeviceMasterTileEntity : BaseMultiBlockMasterTileEntity(100000
     }
 
     override fun activateMultiBlock() {
-        getMultiBlockRepresentation().blocks.forEach { bi ->
+        multiBlock.blocks.forEach { bi ->
             if (bi.pos != pos)
                 world.setBlockToAir(bi.pos)
         }
@@ -40,12 +44,6 @@ open class AncientDeviceMasterTileEntity : BaseMultiBlockMasterTileEntity(100000
         giant.setPosition(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
         world.spawnEntity(giant)
         world.setBlockToAir(pos)
-    }
-
-    override fun getMultiBlockRepresentation(): MultiBlock {
-        if (!isMultiBlockVarInitialised())
-            multiBlock = MultiBlock(ModMultiBlocks.ancientDevice.getAllOffsetBlockInfos(pos))
-        return multiBlock
     }
 
     fun setCompleteBlockstate(world: World, pos: BlockPos, value: Boolean) {
