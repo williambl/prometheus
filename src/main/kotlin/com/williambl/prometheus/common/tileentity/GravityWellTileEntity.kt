@@ -3,6 +3,7 @@ package com.williambl.prometheus.common.tileentity
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.entity.Entity
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.AxisAlignedBB
 
 open class GravityWellTileEntity : BaseEnergyTileEntity() {
@@ -21,13 +22,19 @@ open class GravityWellTileEntity : BaseEnergyTileEntity() {
     }
 
     override fun update() {
-        if (!this.hasWorld() || this.world.isRemote)
+        if (!this.hasWorld())
             return
+
+        if (world.isRemote) {
+            world.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, true, pos.x + world.rand.nextDouble(), pos.y + 1.0, pos.z + world.rand.nextDouble(), 0.0, maxRange / 10.0, 0.0)
+            return
+        }
 
         world.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB(pos, pos.offset(direction, maxRange)).expand(1.0, 0.0, 1.0)).forEach { entity ->
             entity.addVelocity(direction.frontOffsetX * strength, direction.frontOffsetY * strength, direction.frontOffsetZ * strength)
             entity.velocityChanged = true
         }
+
     }
 
 }
