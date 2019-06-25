@@ -1,0 +1,53 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_top",
+    "textures": {
+      "side": "prometheus:blocks/ancient_casing_0",
+      "top": "prometheus:blocks/gravity_well"
+    }
+  },
+  "variants": {
+    "normal": [
+      {
+        "textures": {
+          "side": "prometheus:blocks/ancient_casing_0"
+        }
+      },
+      {
+        "textures": {
+          "side": "prometheus:blocks/ancient_casing_1"
+        }
+      },
+      {
+        "textures": {
+          "side": "prometheus:blocks/ancient_casing_2"
+        }
+      }
+    ],
+    "inventory": [
+      {}
+    ],
+    "facing": {
+      "down": {
+        "x": 180
+      },
+      "up": {},
+      "north": {
+        "x": 270,
+        "y": 180
+      },
+      "south": {
+        "x": 270
+      },
+      "west": {
+        "x": 270,
+        "y": 90
+      },
+      "east": {
+        "x": 270,
+        "y": 270
+      }
+    }
+  }
+}
