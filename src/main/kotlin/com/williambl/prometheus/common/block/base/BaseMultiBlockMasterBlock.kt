@@ -9,15 +9,14 @@ import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 open class BaseMultiBlockMasterBlock<T : BaseMultiBlockMasterTileEntity>(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
-                                                                         lightLevel: Float, material: Material, val factory: () -> T) : BaseEnergyBlock(registryName, tab, soundType, hardness,
-        resistance, lightLevel, material) {
+                                                                         lightLevel: Float, material: Material, factory: () -> T) : BaseTileEntityProviderBlock<T>(registryName, tab, soundType, hardness,
+        resistance, lightLevel, material, factory) {
 
     companion object {
         val complete: PropertyBool = PropertyBool.create("complete")
@@ -25,15 +24,6 @@ open class BaseMultiBlockMasterBlock<T : BaseMultiBlockMasterTileEntity>(registr
 
     init {
         this.defaultState = this.blockState.baseState.withProperty(complete, false)
-    }
-
-    override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
-        return factory()
-    }
-
-    override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {
-        super.breakBlock(worldIn, pos, state)
-        worldIn.removeTileEntity(pos)
     }
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
