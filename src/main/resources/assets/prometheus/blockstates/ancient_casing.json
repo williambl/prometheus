@@ -5,8 +5,18 @@
   },
   "variants": {
     "normal": [
-      { "textures": { "all": "prometheus:blocks/ancient_casing_0" }, "weight": 2 },
-      { "textures": { "all": "prometheus:blocks/ancient_casing_1" }, "weight": 2 },
+      {
+        "textures": {
+          "all": "prometheus:blocks/ancient_casing_0"
+        },
+        "weight": 1
+      },
+      {
+        "textures": {
+          "all": "prometheus:blocks/ancient_casing_1"
+        },
+        "weight": 1
+      },
       { "textures": { "all": "prometheus:blocks/ancient_casing_2" }, "weight": 1 }
     ],
     "inventory": [{

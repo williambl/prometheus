@@ -1,0 +1,9 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "ctm",
+    "textures": [
+      "prometheus:blocks/ancient_casing_2-ctm"
+    ]
+  }
+}
