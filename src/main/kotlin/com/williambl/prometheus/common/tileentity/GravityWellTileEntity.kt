@@ -14,8 +14,8 @@ open class GravityWellTileEntity : BaseEnergyTileEntity() {
     var capacity = 50000
     var maxRange = 32
 
-    var strength = 0.1
-    private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(GravityWellBlock.direction) }
+    private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(GravityWellBlock.facing) }
+    private val strength: Double by lazy { if (direction in EnumFacing.HORIZONTALS) 0.05 else 0.1 }
 
     init {
         setMaxInput(input)
@@ -33,6 +33,8 @@ open class GravityWellTileEntity : BaseEnergyTileEntity() {
         }
 
         world.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB(pos, pos.offset(direction, maxRange)).expand(1.0, 1.0, 1.0)).forEach { entity ->
+            if (direction in EnumFacing.HORIZONTALS)
+                entity.motionY = 0.0
             entity.addVelocity(direction.frontOffsetX * strength, direction.frontOffsetY * strength, direction.frontOffsetZ * strength)
             entity.velocityChanged = true
         }

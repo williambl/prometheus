@@ -17,26 +17,26 @@ class GravityWellBlock(registryName: String, tab: CreativeTabs, soundType: Sound
                        lightLevel: Float, material: Material) : BaseTileEntityProviderBlock<GravityWellTileEntity>(registryName, tab, soundType, hardness, resistance, lightLevel, material, ::GravityWellTileEntity) {
 
     companion object {
-        val direction: PropertyDirection = PropertyDirection.create("direction", { true })
+        val facing: PropertyDirection = PropertyDirection.create("facing", { true })
     }
 
     init {
-        this.defaultState = this.blockState.baseState.withProperty(direction, EnumFacing.DOWN)
+        this.defaultState = this.blockState.baseState.withProperty(facing, EnumFacing.DOWN)
     }
 
     override fun createBlockState(): BlockStateContainer {
-        return BlockStateContainer(this, direction)
+        return BlockStateContainer(this, facing)
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
-        return this.defaultState.withProperty(direction, EnumFacing.getFront(meta))
+        return this.defaultState.withProperty(facing, EnumFacing.getFront(meta))
     }
 
     override fun getMetaFromState(state: IBlockState): Int {
-        return state.getValue(direction).index
+        return state.getValue(facing).index
     }
 
     override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
-        return this.defaultState.withProperty(direction, EnumFacing.getDirectionFromEntityLiving(pos, placer))
+        return this.defaultState.withProperty(GravityWellBlock.facing, EnumFacing.getDirectionFromEntityLiving(pos, placer))
     }
 }
