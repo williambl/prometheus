@@ -1,0 +1,29 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "prometheus:blocks/ancient_light_off"
+    }
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "powered": {
+      "false": {
+        "textures": {
+          "all": "prometheus:blocks/ancient_light_off"
+        }
+      },
+      "true": {
+        "textures": {
+          "all": "prometheus:blocks/ancient_light_on"
+        }
+      }
+    }
+  }
+}
