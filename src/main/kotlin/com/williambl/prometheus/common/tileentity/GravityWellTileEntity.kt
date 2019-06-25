@@ -1,5 +1,6 @@
 package com.williambl.prometheus.common.tileentity
 
+import com.williambl.prometheus.common.block.GravityWellBlock
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.entity.Entity
 import net.minecraft.util.EnumFacing
@@ -12,8 +13,9 @@ open class GravityWellTileEntity : BaseEnergyTileEntity() {
     var output = 2500
     var capacity = 50000
     var maxRange = 32
-    var direction = EnumFacing.UP
+
     var strength = 0.1
+    private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(GravityWellBlock.direction) }
 
     init {
         setMaxInput(input)
@@ -26,11 +28,11 @@ open class GravityWellTileEntity : BaseEnergyTileEntity() {
             return
 
         if (world.isRemote) {
-            world.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, true, pos.x + world.rand.nextDouble(), pos.y + 1.0, pos.z + world.rand.nextDouble(), 0.0, maxRange / 10.0, 0.0)
+            world.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, true, pos.x + world.rand.nextDouble(), pos.y + world.rand.nextDouble(), pos.z + world.rand.nextDouble(), direction.frontOffsetX * (maxRange / 10.0), direction.frontOffsetY * (maxRange / 10.0), direction.frontOffsetZ * (maxRange / 10.0))
             return
         }
 
-        world.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB(pos, pos.offset(direction, maxRange)).expand(1.0, 0.0, 1.0)).forEach { entity ->
+        world.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB(pos, pos.offset(direction, maxRange)).expand(1.0, 1.0, 1.0)).forEach { entity ->
             entity.addVelocity(direction.frontOffsetX * strength, direction.frontOffsetY * strength, direction.frontOffsetZ * strength)
             entity.velocityChanged = true
         }
