@@ -4,6 +4,16 @@
     "type": "ctm",
     "textures": [
       "prometheus:blocks/ancient_casing_2-ctm"
-    ]
+    ],
+    "extra": {
+      "connect_to": [
+        {
+          "block": "prometheus:gravity_well"
+        },
+        {
+          "block": "prometheus:ancient_casing"
+        }
+      ]
+    }
   }
 }
