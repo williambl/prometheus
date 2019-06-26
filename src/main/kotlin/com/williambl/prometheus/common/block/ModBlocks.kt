@@ -3,6 +3,7 @@ package com.williambl.prometheus.common.block
 import com.williambl.prometheus.common.block.base.BaseBlock
 import com.williambl.prometheus.common.block.base.BaseLightBlock
 import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock
+import com.williambl.prometheus.common.block.base.BaseTileEntityProviderBlock
 import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import com.williambl.prometheus.common.tileentity.AncientDroneSpawnerTileEntity
 import net.minecraft.block.Block
@@ -21,7 +22,7 @@ object ModBlocks {
     val ancientDeviceMaster = BaseMultiBlockMasterBlock("ancient_core", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.0f, Material.IRON, ::AncientDeviceMasterTileEntity)
     val ancientCircuitry = BaseBlock("ancient_circuitry", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.5f, Material.IRON)
     val ancientCasing = BaseBlock("ancient_casing", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON)
-    val ancientDroneSpawner = BaseMultiBlockMasterBlock("ancient_drone_spawner", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON, ::AncientDroneSpawnerTileEntity)
+    val ancientDroneSpawner = BaseTileEntityProviderBlock("ancient_drone_spawner", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON, ::AncientDroneSpawnerTileEntity)
     val ancientLight = BaseLightBlock("ancient_light", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 15, Material.IRON)
     val gravityWell = GravityWellBlock("gravity_well", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON)
 

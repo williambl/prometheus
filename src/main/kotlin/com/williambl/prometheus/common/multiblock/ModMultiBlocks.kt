@@ -140,13 +140,6 @@ object ModMultiBlocks {
             createBlockInfo(-2, -4, -2, ModBlocks.ancientCasing)
     ))
 
-    val ancientDroneSpawner = MultiBlock(arrayOf(
-            createBlockInfo(0, 0, 1, ModBlocks.ancientCasing),
-            createBlockInfo(0, 0, -1, ModBlocks.ancientCasing),
-            createBlockInfo(1, 0, 0, ModBlocks.ancientCasing),
-            createBlockInfo(-1, 0, 0, ModBlocks.ancientCasing)
-    ))
-
     fun createBlockInfo(x: Int, y: Int, z: Int, block: Block): MultiBlock.MultiBlockBlockInfo {
         return MultiBlock.MultiBlockBlockInfo(BlockPos(x, y, z), block.defaultState)
     }
