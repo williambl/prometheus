@@ -32,11 +32,15 @@ open class GravityWellTileEntity : BaseEnergyTileEntity() {
             return
         }
 
+        if (energyStored < 10)
+            return
+
         world.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB(pos, pos.offset(direction, maxRange)).expand(1.0, 1.0, 1.0)).forEach { entity ->
             if (direction in EnumFacing.HORIZONTALS)
                 entity.motionY = 0.0
             entity.addVelocity(direction.frontOffsetX * strength, direction.frontOffsetY * strength, direction.frontOffsetZ * strength)
             entity.velocityChanged = true
+            extractEnergy(10, false)
         }
 
     }
