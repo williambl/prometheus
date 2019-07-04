@@ -8,19 +8,24 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldServer
 import net.minecraft.world.gen.structure.template.PlacementSettings
 import net.minecraft.world.gen.structure.template.Template
+import net.minecraftforge.fml.common.Loader
 
 object AncientComplexGenerator {
 
-    val entranceResourceLocation = ResourceLocation(Prometheus.MODID, "entrance")
-    val exitResourceLocation = ResourceLocation(Prometheus.MODID, "exit")
-    val roomResourceLocations = listOf(ResourceLocation(Prometheus.MODID, "room1"), ResourceLocation(Prometheus.MODID, "room2"))
     val maxRooms = 5
     val roomHeight = 32
+
+    val entranceResourceLocation = ResourceLocation(Prometheus.MODID, "entrance")
+    val exitResourceLocation = ResourceLocation(Prometheus.MODID, "exit")
+    val roomDatas: List<RoomData> = listOf(
+            RoomData("room1"),
+            RoomData("room2")
+    )
 
     fun generateComplex(world: World, chunk: ChunkPos) {
         generateRoom(world, chunk, 0, false, getTemplate(world, entranceResourceLocation))
         for (i in 1..maxRooms) {
-            generateRoom(world, chunk, roomHeight * i, i % 2 == 1, getTemplate(world, roomResourceLocations.random()))
+            generateRoom(world, chunk, roomHeight * i, i % 2 == 1, getTemplate(world, roomDatas.randomValidRoom().location))
         }
         generateRoom(world, chunk, roomHeight * (maxRooms + 1), false, getTemplate(world, exitResourceLocation))
     }
@@ -42,5 +47,23 @@ object AncientComplexGenerator {
     private fun getTemplate(world: World, resourceLocation: ResourceLocation): Template {
         val templateManager = (world as WorldServer).structureTemplateManager
         return templateManager.getTemplate(world.minecraftServer, resourceLocation)
+    }
+
+
+    class RoomData(val location: ResourceLocation, val requiredMods: Array<String>) {
+        constructor(resourceLocation: ResourceLocation) : this(resourceLocation, arrayOf())
+        constructor(location: String, requiredMods: Array<String>) : this(ResourceLocation(Prometheus.MODID, location), requiredMods)
+        constructor(location: String) : this(ResourceLocation(Prometheus.MODID, location), arrayOf())
+
+        fun modsPresent(): Boolean {
+            return requiredMods.all { Loader.isModLoaded(it) }
+        }
+
+    }
+
+    private fun List<RoomData>.randomValidRoom(): RoomData {
+        while (true) {
+            return this.filter { it.modsPresent() }.random()
+        }
     }
 }
