@@ -21,7 +21,7 @@ object AncientComplexGenerator {
     val exits = listOf(
             Room("exit")
     )
-    val rooms: List<Room> = listOf(
+    val rooms = listOf(
             Room("room1"),
             Room("room2")
     )
