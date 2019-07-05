@@ -17,15 +17,15 @@ object AncientComplexGenerator {
 
     val entranceResourceLocation = ResourceLocation(Prometheus.MODID, "entrance")
     val exitResourceLocation = ResourceLocation(Prometheus.MODID, "exit")
-    val roomDatas: List<RoomData> = listOf(
-            RoomData("room1"),
-            RoomData("room2")
+    val rooms: List<Room> = listOf(
+            Room("room1"),
+            Room("room2")
     )
 
     fun generateComplex(world: World, chunk: ChunkPos) {
         generateRoom(world, chunk, 0, false, getTemplate(world, entranceResourceLocation))
         for (i in 1..maxRooms) {
-            generateRoom(world, chunk, roomHeight * i, i % 2 == 1, getTemplate(world, roomDatas.randomValidRoom().location))
+            generateRoom(world, chunk, roomHeight * i, i % 2 == 1, getTemplate(world, rooms.randomValidRoom().location))
         }
         generateRoom(world, chunk, roomHeight * (maxRooms + 1), false, getTemplate(world, exitResourceLocation))
     }
@@ -50,7 +50,7 @@ object AncientComplexGenerator {
     }
 
 
-    class RoomData(val location: ResourceLocation, val requiredMods: Array<String>) {
+    class Room(val location: ResourceLocation, val requiredMods: Array<String>) {
         constructor(resourceLocation: ResourceLocation) : this(resourceLocation, arrayOf())
         constructor(location: String, requiredMods: Array<String>) : this(ResourceLocation(Prometheus.MODID, location), requiredMods)
         constructor(location: String) : this(ResourceLocation(Prometheus.MODID, location), arrayOf())
@@ -61,7 +61,7 @@ object AncientComplexGenerator {
 
     }
 
-    private fun List<RoomData>.randomValidRoom(): RoomData {
+    private fun List<Room>.randomValidRoom(): Room {
         while (true) {
             return this.filter { it.modsPresent() }.random()
         }
