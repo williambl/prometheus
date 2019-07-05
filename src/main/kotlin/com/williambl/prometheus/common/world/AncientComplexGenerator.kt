@@ -66,8 +66,6 @@ object AncientComplexGenerator {
     }
 
     private fun List<Room>.randomValidRoom(): Room {
-        while (true) {
-            return this.filter { it.modsPresent() }.random()
-        }
+        return this.filter { it.modsPresent() }.random()
     }
 }
