@@ -15,19 +15,23 @@ object AncientComplexGenerator {
     val maxRooms = 5
     val roomHeight = 32
 
-    val entranceResourceLocation = ResourceLocation(Prometheus.MODID, "entrance")
-    val exitResourceLocation = ResourceLocation(Prometheus.MODID, "exit")
+    val entrances = listOf(
+            Room("entrance")
+    )
+    val exits = listOf(
+            Room("exit")
+    )
     val rooms: List<Room> = listOf(
             Room("room1"),
             Room("room2")
     )
 
     fun generateComplex(world: World, chunk: ChunkPos) {
-        generateRoom(world, chunk, 0, false, getTemplate(world, entranceResourceLocation))
+        generateRoom(world, chunk, 0, false, getTemplate(world, entrances.randomValidRoom().location))
         for (i in 1..maxRooms) {
             generateRoom(world, chunk, roomHeight * i, i % 2 == 1, getTemplate(world, rooms.randomValidRoom().location))
         }
-        generateRoom(world, chunk, roomHeight * (maxRooms + 1), false, getTemplate(world, exitResourceLocation))
+        generateRoom(world, chunk, roomHeight * (maxRooms + 1), false, getTemplate(world, exits.randomValidRoom().location))
     }
 
     private fun generateRoom(world: World, chunk: ChunkPos, y: Int, flip: Boolean, template: Template) {
