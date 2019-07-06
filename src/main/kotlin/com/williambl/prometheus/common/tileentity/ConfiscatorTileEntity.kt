@@ -22,6 +22,9 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
     var output = 2500
     var capacity = 50000
 
+    private var delay = 5
+    private var counter = 0
+
     private val range = 3
     private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(OrientableTileEntityProviderBlock.facing) }
     private val aabb: AxisAlignedBB by lazy { AxisAlignedBB(pos.offset(direction, range)).grow(range.toDouble(), range.toDouble(), range.toDouble()) }
@@ -39,13 +42,18 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
         if (energyStored < 10)
             return
 
+        counter++
+        if (counter < delay)
+            return
+        counter = 0
+
         world.getEntitiesWithinAABB(EntityPlayer::class.java, aabb).forEach { player ->
             getDisallowedItems(player.inventory).forEach {
                 world.spawnEntity(createEntityItem(it, player))
                 createParticles(player)
                 world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0f, 1.0f)
                 it.count = 0
-                extractEnergy(10, false)
+                extractEnergy(1000, false)
             }
         }
     }
