@@ -1,7 +1,7 @@
 package com.williambl.prometheus.common.block.base
 
-import com.williambl.prometheus.common.item.ModItems
 import com.williambl.prometheus.common.tileentity.base.BaseMultiBlockMasterTileEntity
+import com.williambl.prometheus.objectholder.ModItemHolder
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
@@ -27,7 +27,7 @@ open class BaseMultiBlockMasterBlock<T : BaseMultiBlockMasterTileEntity>(registr
     }
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-        if (playerIn.getHeldItem(hand).item != ModItems.multiBlockStarter)
+        if (playerIn.getHeldItem(hand).item != ModItemHolder.multiBlockStarter)
             return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ)
 
         val tileEntity = worldIn.getTileEntity(pos) as T

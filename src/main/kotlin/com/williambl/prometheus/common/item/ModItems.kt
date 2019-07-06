@@ -10,10 +10,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @Mod.EventBusSubscriber
 object ModItems {
 
-    val multiBlockStarter = BaseItem("multiblockstarter", CreativeTabs.REDSTONE)
-    val debugItem = DebugItem("debug_item", CreativeTabs.REDSTONE)
-
-    val items = listOf<Item>(multiBlockStarter, debugItem)
+    val items: List<Item> = listOf(
+            BaseItem("multiblockstarter", CreativeTabs.REDSTONE),
+            DebugItem("debug_item", CreativeTabs.REDSTONE)
+    )
 
     @SubscribeEvent
     @JvmStatic
