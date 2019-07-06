@@ -5,11 +5,15 @@ import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
+import net.minecraft.init.SoundEvents
 import net.minecraft.item.ItemChorusFruit
 import net.minecraft.item.ItemEnderPearl
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.EnumParticleTypes
+import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.AxisAlignedBB
+import net.minecraft.world.WorldServer
 import net.minecraftforge.energy.CapabilityEnergy
 
 open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
@@ -29,7 +33,7 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
     }
 
     override fun update() {
-        if (!this.hasWorld())
+        if (!this.hasWorld() || world.isRemote)
             return
 
         if (energyStored < 10)
@@ -37,19 +41,13 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
 
         world.getEntitiesWithinAABB(EntityPlayer::class.java, aabb).forEach { player ->
             getDisallowedItems(player.inventory).forEach {
-                val entity = EntityItem(world, player.posX, player.posY, player.posZ, it.copy())
-                entity.lifespan = 80
-                entity.setInfinitePickupDelay()
-                entity.setNoGravity(true)
-                entity.motionY = world.rand.nextDouble() * 0.05
-                entity.velocityChanged = true
-                world.spawnEntity(entity)
+                world.spawnEntity(createEntityItem(it, player))
+                createParticles(player)
+                world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0f, 1.0f)
                 it.count = 0
+                extractEnergy(10, false)
             }
-            extractEnergy(10, false)
         }
-
-
     }
 
     fun getDisallowedItems(inv: InventoryPlayer): List<ItemStack> {
@@ -60,5 +58,19 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
         return stack.item is ItemEnderPearl ||
                 stack.item is ItemChorusFruit ||
                 stack.hasCapability(CapabilityEnergy.ENERGY, null)
+    }
+
+    fun createEntityItem(stack: ItemStack, player: EntityPlayer): EntityItem {
+        val entity = EntityItem(world, player.posX, player.posY + 1, player.posZ, stack.copy())
+        entity.lifespan = 80
+        entity.setInfinitePickupDelay()
+        entity.setNoGravity(true)
+        entity.motionY = world.rand.nextDouble() * 0.05
+        entity.velocityChanged = true
+        return entity
+    }
+
+    fun createParticles(player: EntityPlayer) {
+        (world as WorldServer).spawnParticle(EnumParticleTypes.FLAME, player.posX, player.posY + 1, player.posZ, 6, 0.0, 0.0, 0.0, 0.05)
     }
 }
