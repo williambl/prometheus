@@ -11,6 +11,7 @@ object ModTileEntities {
         registerTileEntity(AncientDeviceMasterTileEntity::class.java)
         registerTileEntity(AncientDroneSpawnerTileEntity::class.java)
         registerTileEntity(GravityWellTileEntity::class.java)
+        registerTileEntity(ConfiscatorTileEntity::class.java)
     }
 
     private fun registerTileEntity(tileEntityClass: Class<out TileEntity>) {

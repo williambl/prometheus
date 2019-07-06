@@ -6,6 +6,7 @@ import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock
 import com.williambl.prometheus.common.block.base.BaseTileEntityProviderBlock
 import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import com.williambl.prometheus.common.tileentity.AncientDroneSpawnerTileEntity
+import com.williambl.prometheus.common.tileentity.ConfiscatorTileEntity
 import com.williambl.prometheus.common.tileentity.GravityWellTileEntity
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
@@ -27,8 +28,9 @@ object ModBlocks {
     val ancientLight = BaseLightBlock("ancient_light", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 15, Material.IRON)
     val gravityWell = OrientableTileEntityProviderBlock("gravity_well", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::GravityWellTileEntity)
     val ancientConcrete = BaseBlock("ancient_concrete", CreativeTabs.BUILDING_BLOCKS, SoundType.STONE, 5.0f, 5.0f, 0.0f, Material.ROCK)
+    val confiscator = OrientableTileEntityProviderBlock("confiscator", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::ConfiscatorTileEntity)
 
-    val blocks = listOf<Block>(ancientDeviceMaster, ancientCircuitry, ancientCasing, ancientDroneSpawner, ancientLight, gravityWell, ancientConcrete)
+    val blocks = listOf<Block>(ancientDeviceMaster, ancientCircuitry, ancientCasing, ancientDroneSpawner, ancientLight, gravityWell, ancientConcrete, confiscator)
 
     @SubscribeEvent
     @JvmStatic
