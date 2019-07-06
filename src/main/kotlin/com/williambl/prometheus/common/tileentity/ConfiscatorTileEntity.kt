@@ -2,6 +2,7 @@ package com.williambl.prometheus.common.tileentity
 
 import com.williambl.prometheus.common.block.OrientableTileEntityProviderBlock
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
+import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.ItemChorusFruit
@@ -35,9 +36,19 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
             return
 
         world.getEntitiesWithinAABB(EntityPlayer::class.java, aabb).forEach { player ->
-            getDisallowedItems(player.inventory).forEach { it.count = 0 }
+            getDisallowedItems(player.inventory).forEach {
+                val entity = EntityItem(world, player.posX, player.posY, player.posZ, it.copy())
+                entity.lifespan = 80
+                entity.setInfinitePickupDelay()
+                entity.setNoGravity(true)
+                entity.motionY = world.rand.nextDouble() * 0.05
+                entity.velocityChanged = true
+                world.spawnEntity(entity)
+                it.count = 0
+            }
             extractEnergy(10, false)
         }
+
 
     }
 
