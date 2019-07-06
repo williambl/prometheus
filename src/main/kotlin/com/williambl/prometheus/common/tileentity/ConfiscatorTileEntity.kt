@@ -6,8 +6,6 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.init.SoundEvents
-import net.minecraft.item.ItemChorusFruit
-import net.minecraft.item.ItemEnderPearl
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumParticleTypes
@@ -15,6 +13,7 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.world.WorldServer
 import net.minecraftforge.energy.CapabilityEnergy
+import java.util.function.Predicate
 
 open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
 
@@ -27,7 +26,11 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
 
     private val range = 3
     private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(OrientableTileEntityProviderBlock.facing) }
-    private val aabb: AxisAlignedBB by lazy { AxisAlignedBB(pos.offset(direction, range)).grow(range.toDouble(), range.toDouble(), range.toDouble()) }
+    private val aabb: AxisAlignedBB by lazy { AxisAlignedBB(pos.offset(direction, range)).grow(range.toDouble(), 0.0, range.toDouble()) }
+
+    var disallowedConditions: MutableList<Predicate<ItemStack>> = mutableListOf(
+            Predicate { stack: ItemStack -> stack.hasCapability(CapabilityEnergy.ENERGY, null) }
+    )
 
     init {
         setMaxInput(input)
@@ -63,9 +66,7 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
     }
 
     fun isDisallowed(stack: ItemStack): Boolean {
-        return stack.item is ItemEnderPearl ||
-                stack.item is ItemChorusFruit ||
-                stack.hasCapability(CapabilityEnergy.ENERGY, null)
+        return disallowedConditions.any { it.test(stack) }
     }
 
     fun createEntityItem(stack: ItemStack, player: EntityPlayer): EntityItem {
