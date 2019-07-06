@@ -6,6 +6,7 @@ import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock
 import com.williambl.prometheus.common.block.base.BaseTileEntityProviderBlock
 import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
 import com.williambl.prometheus.common.tileentity.AncientDroneSpawnerTileEntity
+import com.williambl.prometheus.common.tileentity.GravityWellTileEntity
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -24,7 +25,7 @@ object ModBlocks {
     val ancientCasing = BaseBlock("ancient_casing", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON)
     val ancientDroneSpawner = BaseTileEntityProviderBlock("ancient_drone_spawner", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0.3f, Material.IRON, ::AncientDroneSpawnerTileEntity)
     val ancientLight = BaseLightBlock("ancient_light", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 15, Material.IRON)
-    val gravityWell = GravityWellBlock("gravity_well", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON)
+    val gravityWell = OrientableTileEntityProviderBlock("gravity_well", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::GravityWellTileEntity)
     val ancientConcrete = BaseBlock("ancient_concrete", CreativeTabs.BUILDING_BLOCKS, SoundType.STONE, 5.0f, 5.0f, 0.0f, Material.ROCK)
 
     val blocks = listOf<Block>(ancientDeviceMaster, ancientCircuitry, ancientCasing, ancientDroneSpawner, ancientLight, gravityWell, ancientConcrete)

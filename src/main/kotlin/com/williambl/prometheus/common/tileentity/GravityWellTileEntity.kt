@@ -1,6 +1,6 @@
 package com.williambl.prometheus.common.tileentity
 
-import com.williambl.prometheus.common.block.GravityWellBlock
+import com.williambl.prometheus.common.block.OrientableTileEntityProviderBlock
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
 import net.minecraft.entity.Entity
 import net.minecraft.util.EnumFacing
@@ -14,7 +14,7 @@ open class GravityWellTileEntity : BaseEnergyTileEntity() {
     var capacity = 50000
     var maxRange = 32
 
-    private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(GravityWellBlock.facing) }
+    private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(OrientableTileEntityProviderBlock.facing) }
     private val strength: Double by lazy { if (direction in EnumFacing.HORIZONTALS) 0.05 else 0.1 }
 
     init {
