@@ -21,12 +21,12 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
     var output = 2500
     var capacity = 50000
 
-    private var delay = 5
+    var delay = 5
     private var counter = 0
 
-    private val range = 3
-    private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(OrientableTileEntityProviderBlock.facing) }
-    private val aabb: AxisAlignedBB by lazy { AxisAlignedBB(pos.offset(direction, if (direction in EnumFacing.HORIZONTALS) range else 1)).grow(range.toDouble(), 0.0, range.toDouble()) }
+    val range = 3
+    val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(OrientableTileEntityProviderBlock.facing) }
+    val aabb: AxisAlignedBB by lazy { AxisAlignedBB(pos.offset(direction, if (direction in EnumFacing.HORIZONTALS) range else 1)).grow(range.toDouble(), 0.0, range.toDouble()) }
 
     var disallowedConditions: MutableList<Predicate<ItemStack>> = mutableListOf(
             Predicate { stack: ItemStack -> stack.hasCapability(CapabilityEnergy.ENERGY, null) }
@@ -44,6 +44,7 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
 
         if (energyStored < 10)
             return
+
 
         counter++
         if (counter < delay)
@@ -81,5 +82,9 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
 
     fun createParticles(player: EntityPlayer) {
         (world as WorldServer).spawnParticle(EnumParticleTypes.FLAME, player.posX, player.posY + 1, player.posZ, 6, 0.0, 0.0, 0.0, 0.05)
+    }
+
+    override fun getRenderBoundingBox(): AxisAlignedBB {
+        return INFINITE_EXTENT_AABB
     }
 }
