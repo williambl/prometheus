@@ -26,7 +26,7 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
 
     private val range = 3
     private val direction: EnumFacing by lazy { world.getBlockState(pos).getValue(OrientableTileEntityProviderBlock.facing) }
-    private val aabb: AxisAlignedBB by lazy { AxisAlignedBB(pos.offset(direction, range)).grow(range.toDouble(), 0.0, range.toDouble()) }
+    private val aabb: AxisAlignedBB by lazy { AxisAlignedBB(pos.offset(direction, if (direction in EnumFacing.HORIZONTALS) range else 1)).grow(range.toDouble(), 0.0, range.toDouble()) }
 
     var disallowedConditions: MutableList<Predicate<ItemStack>> = mutableListOf(
             Predicate { stack: ItemStack -> stack.hasCapability(CapabilityEnergy.ENERGY, null) }
