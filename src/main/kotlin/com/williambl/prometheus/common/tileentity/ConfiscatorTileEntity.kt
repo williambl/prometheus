@@ -2,6 +2,8 @@ package com.williambl.prometheus.common.tileentity
 
 import com.williambl.prometheus.common.block.OrientableTileEntityProviderBlock
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
+import com.williambl.prometheus.objectholder.ModSoundEventHolder
+import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
@@ -22,6 +24,7 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
     var capacity = 50000
 
     var delay = 5
+    val soundLength = 100
     private var counter = 0
 
     val range = 3
@@ -39,17 +42,21 @@ open class ConfiscatorTileEntity : BaseEnergyTileEntity() {
     }
 
     override fun update() {
-        if (!this.hasWorld() || world.isRemote)
+        if (!this.hasWorld())
             return
+
+        counter++
+        if (counter % delay != 0)
+            return
+
+        if (world.isRemote) {
+            if (counter % soundLength == 0)
+                (world as WorldClient).playSound(pos, ModSoundEventHolder.confiscatorHum, SoundCategory.BLOCKS, 1f, 1f, false)
+            return
+        }
 
         if (energyStored < 10)
             return
-
-
-        counter++
-        if (counter < delay)
-            return
-        counter = 0
 
         world.getEntitiesWithinAABB(EntityPlayer::class.java, aabb).forEach { player ->
             getDisallowedItems(player.inventory).forEach {

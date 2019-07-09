@@ -54,8 +54,6 @@ class ConfiscatorTESR : TileEntitySpecialRenderer<ConfiscatorTileEntity>() {
 
         buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR)
 
-        println(te.world.totalWorldTime + partialTicks)
-        println(sin(te.world.totalWorldTime + partialTicks))
         drawHorizontalQuad(tess, buf, aabb.minX, aabb.maxX, aabb.minZ, aabb.maxZ, aabb.minY, getColourFromGradient(sin((te.world.totalWorldTime + partialTicks) / 20.0)))
 
         GlStateManager.popMatrix()
