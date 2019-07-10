@@ -10,4 +10,7 @@ public class ModEntityHolder {
     @GameRegistry.ObjectHolder("ancient_drone")
     public static EntityEntry ancientDrone;
 
+    @GameRegistry.ObjectHolder("plasma_ball")
+    public static EntityEntry plasmaBall;
+
 }
