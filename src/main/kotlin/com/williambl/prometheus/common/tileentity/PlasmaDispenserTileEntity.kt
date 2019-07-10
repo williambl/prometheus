@@ -1,8 +1,8 @@
 package com.williambl.prometheus.common.tileentity
 
 import com.williambl.prometheus.common.block.OrientableTileEntityProviderBlock
+import com.williambl.prometheus.common.entity.EntityPlasmaBall
 import com.williambl.prometheus.common.tileentity.base.BaseEnergyTileEntity
-import net.minecraft.entity.projectile.EntitySmallFireball
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
@@ -39,7 +39,7 @@ open class PlasmaDispenserTileEntity : BaseEnergyTileEntity() {
         if (energyStored < 10)
             return
 
-        val entity = EntitySmallFireball(world, offsetPos.x.toDouble(), offsetPos.y.toDouble(), offsetPos.z.toDouble(), accel.x, accel.y, accel.z)
+        val entity = EntityPlasmaBall(world, offsetPos.x.toDouble(), offsetPos.y.toDouble(), offsetPos.z.toDouble(), accel.x, accel.y, accel.z)
         world.spawnEntity(entity)
         extractEnergy(10, false)
 
