@@ -13,11 +13,11 @@ class EntityPlasmaBall : EntityFireball {
     val maxAge = 100
 
     constructor(worldIn: World) : super(worldIn) {
-        this.setSize(0.3125F, 0.3125F)
+        this.setSize(1.0F, 1.0F)
     }
 
     constructor(worldIn: World, x: Double, y: Double, z: Double, accelX: Double, accelY: Double, accelZ: Double) : super(worldIn, x, y, z, accelX, accelY, accelZ) {
-        this.setSize(0.3125F, 0.3125F)
+        this.setSize(1.0F, 1.0F)
     }
 
     override fun onUpdate() {
