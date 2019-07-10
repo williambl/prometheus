@@ -27,7 +27,7 @@ object ModBlocks {
             OrientableTileEntityProviderBlock("gravity_well", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::GravityWellTileEntity),
             BaseBlock("ancient_concrete", CreativeTabs.BUILDING_BLOCKS, SoundType.STONE, 5.0f, 5.0f, 0.0f, Material.ROCK),
             OrientableTileEntityProviderBlock("confiscator", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::ConfiscatorTileEntity),
-            OrientableTileEntityProviderBlock("plasma_dispenser", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::PlasmaDispenserTileEntity)
+            OrientableTileEntityProviderBlock("plasma_ball_dispenser", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::PlasmaDispenserTileEntity)
     )
 
     @SubscribeEvent

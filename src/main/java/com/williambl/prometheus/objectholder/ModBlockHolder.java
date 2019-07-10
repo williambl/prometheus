@@ -29,4 +29,6 @@ public class ModBlockHolder {
     public static OrientableTileEntityProviderBlock gravityWell;
     @GameRegistry.ObjectHolder("confiscator")
     public static OrientableTileEntityProviderBlock confiscator;
+    @GameRegistry.ObjectHolder("plasma_ball_dispenser")
+    public static OrientableTileEntityProviderBlock plasmaBallDispenser;
 }
