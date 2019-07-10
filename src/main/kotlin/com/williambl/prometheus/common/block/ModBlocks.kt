@@ -4,10 +4,7 @@ import com.williambl.prometheus.common.block.base.BaseBlock
 import com.williambl.prometheus.common.block.base.BaseLightBlock
 import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock
 import com.williambl.prometheus.common.block.base.BaseTileEntityProviderBlock
-import com.williambl.prometheus.common.tileentity.AncientDeviceMasterTileEntity
-import com.williambl.prometheus.common.tileentity.AncientDroneSpawnerTileEntity
-import com.williambl.prometheus.common.tileentity.ConfiscatorTileEntity
-import com.williambl.prometheus.common.tileentity.GravityWellTileEntity
+import com.williambl.prometheus.common.tileentity.*
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -29,7 +26,8 @@ object ModBlocks {
             BaseLightBlock("ancient_light", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 15, Material.IRON),
             OrientableTileEntityProviderBlock("gravity_well", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::GravityWellTileEntity),
             BaseBlock("ancient_concrete", CreativeTabs.BUILDING_BLOCKS, SoundType.STONE, 5.0f, 5.0f, 0.0f, Material.ROCK),
-            OrientableTileEntityProviderBlock("confiscator", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::ConfiscatorTileEntity)
+            OrientableTileEntityProviderBlock("confiscator", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::ConfiscatorTileEntity),
+            OrientableTileEntityProviderBlock("plasma_dispenser", CreativeTabs.REDSTONE, SoundType.METAL, 3.0f, 4.0f, 0f, Material.IRON, ::PlasmaDispenserTileEntity)
     )
 
     @SubscribeEvent
