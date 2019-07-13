@@ -9,12 +9,16 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class BaseTileEntityProviderBlock(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
-                                           lightLevel: Float, material: Material) : BaseBlock(registryName, tab, soundType, hardness,
+open class BaseTileEntityProviderBlock<T : TileEntity>(registryName: String, tab: CreativeTabs, soundType: SoundType, hardness: Float, resistance: Float,
+                                                       lightLevel: Float, material: Material, val factory: () -> T) : BaseBlock(registryName, tab, soundType, hardness,
         resistance, lightLevel, material), ITileEntityProvider {
 
-    abstract override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity
+    override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
+        return factory()
+    }
 
-    abstract override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState)
-
+    override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {
+        super.breakBlock(worldIn, pos, state)
+        worldIn.removeTileEntity(pos)
+    }
 }

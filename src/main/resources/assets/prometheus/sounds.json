@@ -1,0 +1,11 @@
+{
+  "confiscator_hum": {
+    "category": "blocks",
+    "subtitle": "prometheus.subtitle.confiscator_hum",
+    "sounds": [
+      {
+        "name": "prometheus:blocks/confiscator_hum"
+      }
+    ]
+  }
+}

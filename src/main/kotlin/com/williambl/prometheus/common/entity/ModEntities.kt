@@ -16,14 +16,20 @@ object ModEntities {
     @JvmStatic
     fun registerEntities(e: RegistryEvent.Register<EntityEntry>) {
         var id = 0
-        val entry: EntityEntry = EntityEntryBuilder.create<EntityAncientDrone>()
+        val ancientDroneEntry: EntityEntry = EntityEntryBuilder.create<EntityAncientDrone>()
                 .entity(EntityAncientDrone::class.java)
                 .id(ResourceLocation(Prometheus.MODID, "ancient_drone"), id++)
                 .name("ancient_drone")
                 .egg(0xFFFFFF, 0xAAAAAA)
                 .tracker(64, 2, true)
                 .build()
-        e.registry.register(entry)
+        val plasmaBallEntry: EntityEntry = EntityEntryBuilder.create<EntityPlasmaBall>()
+                .entity(EntityPlasmaBall::class.java)
+                .id(ResourceLocation(Prometheus.MODID, "plasma_ball"), id++)
+                .name("plasma_ball")
+                .tracker(64, 2, true)
+                .build()
+        e.registry.registerAll(ancientDroneEntry, plasmaBallEntry)
         LootTableList.register(EntityAncientDrone.loot)
     }
 }

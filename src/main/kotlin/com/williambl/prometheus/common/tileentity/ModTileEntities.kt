@@ -10,6 +10,9 @@ object ModTileEntities {
         registerTileEntity(EnergyStoreTileEntity::class.java)
         registerTileEntity(AncientDeviceMasterTileEntity::class.java)
         registerTileEntity(AncientDroneSpawnerTileEntity::class.java)
+        registerTileEntity(GravityWellTileEntity::class.java)
+        registerTileEntity(ConfiscatorTileEntity::class.java)
+        registerTileEntity(PlasmaDispenserTileEntity::class.java)
     }
 
     private fun registerTileEntity(tileEntityClass: Class<out TileEntity>) {
