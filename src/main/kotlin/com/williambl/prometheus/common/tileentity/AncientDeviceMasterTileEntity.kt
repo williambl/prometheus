@@ -4,8 +4,9 @@ import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock
 import com.williambl.prometheus.common.multiblock.ModMultiBlocks
 import com.williambl.prometheus.common.multiblock.MultiBlock
 import com.williambl.prometheus.common.tileentity.base.BaseMultiBlockMasterTileEntity
-import net.minecraft.entity.monster.EntityGiantZombie
+import com.williambl.prometheus.common.world.AncientComplexGenerator
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
 import net.minecraft.world.World
 
 open class AncientDeviceMasterTileEntity : BaseMultiBlockMasterTileEntity(1000000, 0, 0) {
@@ -36,14 +37,9 @@ open class AncientDeviceMasterTileEntity : BaseMultiBlockMasterTileEntity(100000
 
     override fun activateMultiBlock() {
         multiBlock.blocks.forEach { bi ->
-            if (bi.pos != pos)
-                world.setBlockToAir(bi.pos)
+            world.setBlockToAir(bi.pos)
         }
-
-        val giant = EntityGiantZombie(world)
-        giant.setPosition(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
-        world.spawnEntity(giant)
-        world.setBlockToAir(pos)
+        AncientComplexGenerator.generateComplex(world, ChunkPos(pos))
     }
 
     fun setCompleteBlockstate(world: World, pos: BlockPos, value: Boolean) {
