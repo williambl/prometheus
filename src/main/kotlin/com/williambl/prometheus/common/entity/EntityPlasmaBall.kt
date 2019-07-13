@@ -1,6 +1,7 @@
 package com.williambl.prometheus.common.entity
 
-import net.minecraft.entity.EntityLiving
+import com.williambl.prometheus.common.block.RedstoneSourceBlock
+import com.williambl.prometheus.objectholder.ModBlockHolder
 import net.minecraft.entity.projectile.EntityFireball
 import net.minecraft.init.Blocks
 import net.minecraft.util.DamageSource
@@ -40,19 +41,14 @@ class EntityPlasmaBall : EntityFireball {
                 }
             }
         } else {
-            var flag1 = true
-
-            if (this.shootingEntity != null && this.shootingEntity is EntityLiving) {
-                flag1 = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this.shootingEntity)
+            if (world.getBlockState(result.blockPos).block == ModBlockHolder.plasmaBallAcceptor) {
+                world.setBlockState(result.blockPos, world.getBlockState(result.blockPos).withProperty(RedstoneSourceBlock.powered, true))
             }
-
-            if (flag1) {
                 val blockpos = result.blockPos.offset(result.sideHit)
 
                 if (this.world.isAirBlock(blockpos)) {
                     this.world.setBlockState(blockpos, Blocks.FIRE.defaultState)
                 }
-            }
         }
 
         this.setDead()

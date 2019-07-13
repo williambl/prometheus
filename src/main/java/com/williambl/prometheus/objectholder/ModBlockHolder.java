@@ -2,6 +2,7 @@ package com.williambl.prometheus.objectholder;
 
 import com.williambl.prometheus.Prometheus;
 import com.williambl.prometheus.common.block.OrientableTileEntityProviderBlock;
+import com.williambl.prometheus.common.block.RedstoneSourceBlock;
 import com.williambl.prometheus.common.block.base.BaseBlock;
 import com.williambl.prometheus.common.block.base.BaseLightBlock;
 import com.williambl.prometheus.common.block.base.BaseMultiBlockMasterBlock;
@@ -31,4 +32,6 @@ public class ModBlockHolder {
     public static OrientableTileEntityProviderBlock confiscator;
     @GameRegistry.ObjectHolder("plasma_ball_dispenser")
     public static OrientableTileEntityProviderBlock plasmaBallDispenser;
+    @GameRegistry.ObjectHolder("plasma_ball_acceptor")
+    public static RedstoneSourceBlock plasmaBallAcceptor;
 }
