@@ -10,8 +10,7 @@ object FourthWallHelper {
         return System.getProperty("user.name")
     }
 
-    fun createErrorMessage(message: String, options: Array<String>) {
-    }
+    val username: String by lazy { System.getProperty("user.name") }
 
     fun showFakeMenu() {
         val mc = Minecraft.getMinecraft()
