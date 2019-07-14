@@ -16,5 +16,6 @@ class BreakFourthWallCommand : BaseCommand() {
 
     override fun execute(server: MinecraftServer, sender: ICommandSender, args: Array<String>) {
         sender.sendMessage(TextComponentString("Hi, " + FourthWallHelper.getCurrentUser()))
+        FourthWallHelper.showFakeMenu()
     }
 }
