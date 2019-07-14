@@ -7,9 +7,7 @@ import net.minecraft.client.gui.GuiButton
 
 object FourthWallHelper {
 
-    fun getCurrentUser(): String {
-        return System.getProperty("user.name")
-    }
+    var shouldMessUpTooltips = false
 
     val username: String by lazy { System.getProperty("user.name") }
 
@@ -24,7 +22,7 @@ object FourthWallHelper {
         }
     }
 
-    fun showDialog(message: String, options: Array<String> = arrayOf(), timeToClose: Int = Int.MAX_VALUE, finalAction: (GuiButton) -> Unit = {}) {
+    fun showDialog(message: String, options: Array<String> = arrayOf(), timeToClose: Int = Int.MAX_VALUE, finalAction: (GuiButton?) -> Unit = {}) {
         val mc = Minecraft.getMinecraft()
         if (mc.currentScreen == null) {
             mc.displayGuiScreen(GuiDialog(message, options, timeToClose, finalAction))

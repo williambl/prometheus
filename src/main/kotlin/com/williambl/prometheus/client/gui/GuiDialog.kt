@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import java.io.IOException
 
-class GuiDialog(var message: String, var options: Array<String>, val timeToClose: Int = Int.MAX_VALUE, val finalAction: (GuiButton) -> Unit = {}) : GuiScreen() {
+class GuiDialog(var message: String, var options: Array<String>, val timeToClose: Int = Int.MAX_VALUE, val finalAction: (GuiButton?) -> Unit = {}) : GuiScreen() {
     private var saveStep: Int = 0
     private var visibleTime: Int = 0
 
@@ -50,8 +50,8 @@ class GuiDialog(var message: String, var options: Array<String>, val timeToClose
         ++this.visibleTime
 
         if (this.visibleTime >= timeToClose) {
-            this.mc.displayGuiScreen(null as GuiScreen?)
-            this.mc.setIngameFocus()
+            closeMenu()
+            finalAction(null)
         }
     }
 
