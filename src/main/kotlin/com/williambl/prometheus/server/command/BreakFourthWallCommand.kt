@@ -19,6 +19,6 @@ class BreakFourthWallCommand : BaseCommand() {
                 "Hello, " + FourthWallHelper.username,
                 arrayOf("Yes", "No"),
                 Int.MAX_VALUE
-        ) { FourthWallHelper.showDialog("One button?", arrayOf("No"), Int.MAX_VALUE) { FourthWallHelper.showDialog("Zero?", arrayOf(), 30) } }
+        ) { FourthWallHelper.showDialog("One button?", arrayOf("No"), Int.MAX_VALUE) { FourthWallHelper.showDialog("Zero?", arrayOf(), 30) { FourthWallHelper.shouldMessUpTooltips = true } } }
     }
 }
