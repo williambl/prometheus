@@ -15,6 +15,10 @@ class BreakFourthWallCommand : BaseCommand() {
 
     override fun execute(server: MinecraftServer, sender: ICommandSender, args: Array<String>) {
         //FourthWallHelper.showFakeMenu()
-        FourthWallHelper.showDialog("Hello, " + FourthWallHelper.getCurrentUser(), "Yes", "No")
+        FourthWallHelper.showDialog(
+                "Hello, " + FourthWallHelper.username,
+                arrayOf("Yes", "No"),
+                Int.MAX_VALUE
+        ) { FourthWallHelper.showDialog("One button?", arrayOf("No"), Int.MAX_VALUE) { FourthWallHelper.showDialog("Zero?", arrayOf(), 30) } }
     }
 }
