@@ -11,6 +11,11 @@ object FourthWallHelper {
 
     val username: String by lazy { System.getProperty("user.name") }
 
+    val finalActions: Array<(GuiButton?) -> Unit> = arrayOf(
+            { it: GuiButton? -> print(it?.id) },
+            { shouldMessUpTooltips = true }
+    )
+
     fun showFakeMenu() {
         val mc = Minecraft.getMinecraft()
         if (mc.currentScreen == null) {

@@ -47,7 +47,7 @@ class ShowDialogMessage(var message: String, var options: Array<String> = arrayO
                 return null
 
             if (ctx?.side == Side.CLIENT) {
-                FourthWallHelper.showDialog(message.message, message.options, message.timeToClose)
+                FourthWallHelper.showDialog(message.message, message.options, message.timeToClose, FourthWallHelper.finalActions[message.finalAction])
             }
 
             return null
