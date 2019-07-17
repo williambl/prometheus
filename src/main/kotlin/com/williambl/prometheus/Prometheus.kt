@@ -1,5 +1,6 @@
 package com.williambl.prometheus
 
+import com.williambl.prometheus.common.networking.ModPackets
 import com.williambl.prometheus.common.tileentity.ModTileEntities
 import com.williambl.prometheus.common.world.ModWorld
 import com.williambl.prometheus.server.command.ModCommands
@@ -25,6 +26,7 @@ object Prometheus {
     fun init(event: FMLInitializationEvent) {
         ModTileEntities.registerTileEntities()
         ModWorld.registerWorldGenerators()
+        ModPackets.registerPackets()
     }
 
     @Mod.EventHandler
