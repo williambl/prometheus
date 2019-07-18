@@ -9,6 +9,8 @@ object ModPackets {
     val instance = NetworkRegistry.INSTANCE.newSimpleChannel(Prometheus.MODID)
 
     fun registerPackets() {
-        instance.registerMessage(ShowDialogMessage.ShowDialogMessageHandler::class.java, ShowDialogMessage::class.java, 0, Side.CLIENT)
+        var discriminator = 0
+        instance.registerMessage(ShowDialogMessage.ShowDialogMessageHandler::class.java, ShowDialogMessage::class.java, discriminator++, Side.CLIENT)
+        instance.registerMessage(ShowFakeMenuMessage.ShowFakeMenuMessageHandler::class.java, ShowFakeMenuMessage::class.java, discriminator++, Side.CLIENT)
     }
 }
