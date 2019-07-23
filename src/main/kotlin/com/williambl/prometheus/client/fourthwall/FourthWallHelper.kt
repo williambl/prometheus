@@ -1,4 +1,4 @@
-package com.williambl.prometheus.common.fourthwall
+package com.williambl.prometheus.client.fourthwall
 
 import com.williambl.prometheus.client.gui.GuiDialog
 import com.williambl.prometheus.client.gui.GuiFakeIngameMenu

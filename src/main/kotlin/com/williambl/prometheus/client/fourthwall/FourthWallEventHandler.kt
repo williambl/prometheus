@@ -1,4 +1,4 @@
-package com.williambl.prometheus.common.fourthwall
+package com.williambl.prometheus.client.fourthwall
 
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.fml.common.Mod

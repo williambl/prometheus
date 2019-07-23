@@ -1,6 +1,6 @@
 package com.williambl.prometheus.common.networking
 
-import com.williambl.prometheus.common.fourthwall.FourthWallHelper
+import com.williambl.prometheus.client.fourthwall.FourthWallHelper
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage
